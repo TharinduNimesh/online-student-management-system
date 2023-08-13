@@ -78,6 +78,12 @@ body {
     font-weight: bold;
 }
 
+.table-responsive table th,
+.table-responsive table td {
+    color: #fff;
+    white-space: nowrap;
+}
+
 /* home header styles */
 .home .header {
     color: white;
