@@ -329,6 +329,7 @@ body {
 
 /* User Navbar (Sidebar) */
 .user .nav-bar {
+    width: 330px;
     height: 100vh;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -395,6 +396,12 @@ body {
     scrollbar-width: none;
     padding: 20px;
     position: relative;
+}
+
+.user .summary-box {
+    height: 100px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 #000;
 }
 
 @media (min-width: 992px) {
