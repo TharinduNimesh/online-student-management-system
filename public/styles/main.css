@@ -380,12 +380,12 @@ body {
 /* User Footer Styles */
 .user .footer {
     width: 100%;
-    height: 80px;
+    min-height: 80px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     border-radius: 10px;
-    position: relative;
+    margin-top: 20px;
 }
 
 /* User Main Section */
@@ -413,5 +413,10 @@ body {
 
     .position-lg-static {
         position: static !important;
+    }
+
+    .user .footer {
+        flex-direction: row;
+        justify-content: space-between;
     }
 }
