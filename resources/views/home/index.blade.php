@@ -12,8 +12,8 @@
 
         <div class="d-lg-flex d-none h-100 align-items-center mt-3">
             <ul>
-                <a href="#" class="active">
-                    <li>Home</li>
+                <a href="#">
+                    <li class="active">Home</li>
                 </a>
                 <a href="#about">
                     <li>About</li>
@@ -24,7 +24,7 @@
                 <a href="#">
                     <li>Contact</li>
                 </a>
-                <a href="#" class="btn btn-danger mx-4">Get Started</a>
+                <a href="{{ route('login') }}" class="btn btn-danger mx-4">Get Started</a>
             </ul>
         </div>
 
@@ -50,7 +50,7 @@
                         potential for success.</p>
                     <div class="row mt-3">
                         <div class="col-12 d-flex justify-content-center">
-                            <button class="btn btn-danger px-5">Get Started</button>
+                            <a href="{{ route('login') }}" class="btn btn-danger px-5">Get Started</a>
                         </div>
                     </div>
                 </div>
@@ -259,7 +259,7 @@
         <div class="footer row">
             <div class="col-12 bg-black">
                 <div class="row px-2 py-3 px-lg-4">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6 mb-5 mb-lg-0">
                         <div class="d-flex gap-3 align-items-center">
                             <img src="/img/logo.png" style="width: 90px;" />
                             <h3 class="text-light">School<span class="text-primary">Plus</span></h3>
