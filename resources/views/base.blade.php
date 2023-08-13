@@ -17,5 +17,7 @@
     <div class="container-fluid p-0">
         @yield('content')
     </div>
+
+    <script src="/scripts/main.js"></script>
 </body>
 </html>

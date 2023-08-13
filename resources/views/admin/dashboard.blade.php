@@ -1,14 +1,11 @@
-@extends('base')
+@extends('admin.layouts.main')
 
 @section('title', 'Dashboard')
 
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1>Dashboard</h1>
-                <p>Welkom Tharindu !!!</p>
-            </div>
+@section('section')
+    <div class="row">
+        <div class="col-12 px-10 py-10 bg-danger">
+            Hello World
         </div>
     </div>
 @endsection
