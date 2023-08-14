@@ -59,8 +59,6 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>City</th>
-                            <th>Subjects</th>
-                            <th>Grades</th>
                             <th>Actions</th>
                         </thead>
                         <tbody>
@@ -70,8 +68,6 @@
                                     <td>{{ $faker->name }}</td>
                                     <td>{{ $faker->email }}</td>
                                     <td>{{ $faker->city }}</td>
-                                    <td>{{ $faker->word }}</td>
-                                    <td>{{ $faker->numberBetween(0, 13) }}</td>
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-success" data-bs-toggle="modal"
                                             data-bs-target="#viewTeacherModal">
@@ -249,7 +245,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content bg-dark text-light">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Information Of Teachers</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Teacher's Informations</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -341,6 +337,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Update</button>
                 </div>
             </div>
         </div>
@@ -353,7 +350,7 @@
         <div class="modal-dialog">
             <div class="modal-content bg-dark text-light">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">WARNING</h1>
+                    <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">&#9888; WARNING</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

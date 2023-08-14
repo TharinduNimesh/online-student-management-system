@@ -27,10 +27,12 @@ Route::prefix('admin/')->group(function() {
     Route::get('dashboard/', function() {
         return view('admin.dashboard');
     })->name('admin.dashboard');
-
     Route::prefix('manage/')->group(function() {
         Route::get('teachers/', function() {
             return view('admin.teachers');
         })->name('admin.teachers');
+        Route::get('officers', function() {
+            return view('admin.officers');
+        })->name('admin.officers');
     });
 });

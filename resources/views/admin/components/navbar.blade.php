@@ -9,12 +9,12 @@
             <span class="nav-text">Home</span>
         </a>
         <a class="nav-item" id="teachers" href="{{ route('admin.teachers') }}">
-            <i class="fa-solid fa-chalkboard-user me-2"></i>
+            <i class="fa-solid fa-chalkboard-user me-3"></i>
             <span class="nav-text">Manage Teachers</span>
         </a>
-        <a class="nav-item" href="#">
-            <i class="fas fa-home me-3"></i>
-            <span class="nav-text">Home</span>
+        <a class="nav-item" id="officers" href="{{ route('admin.officers') }}">
+            <i class="fa-solid fa-user-tie me-3"></i>
+            <span class="nav-text">Manage Staffs</span>
         </a>
         <a class="nav-item" href="#">
             <i class="fas fa-home me-3"></i>
