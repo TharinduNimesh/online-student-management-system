@@ -18,6 +18,8 @@
         @yield('content')
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/scripts/main.js"></script>
+    @yield('scripts')
 </body>
 </html>

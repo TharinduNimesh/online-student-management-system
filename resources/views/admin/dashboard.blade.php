@@ -59,7 +59,7 @@
     {{-- Recent Joined Start --}}
     <div class="row mt-4">
         <div class="col-lg-6 mb-3 mb-lg-0 px-1">
-            <div class="p-3 bg-dark rounded">
+            <div class="p-3 bg-dark rounded h-100">
                 <div class="w-100 mb-3 d-flex justify-content-between align-items-center px-2">
                     <h5 class="text-secondary mx-3">Recently Joined Teachers</h5> 
                     <a href="#" class="btn btn-danger d-none d-md-block">Show All</a>                   
@@ -88,7 +88,7 @@
         </div>
 
         <div class="col-lg-6 mb-3 mb-lg-0 px-1">
-            <div class="p-3 bg-dark rounded">
+            <div class="p-3 bg-dark rounded h-100">
                 <div class="w-100 mb-3 d-flex justify-content-between align-items-center px-2">
                     <h5 class="text-secondary mx-3">Recently Joined Officers</h5> 
                     <a href="#" class="btn btn-danger d-none d-md-block">Show All</a>                   
@@ -117,4 +117,119 @@
         </div>
     </div>
     {{-- Recently Joined End --}}
+
+    {{-- Charts Start --}}
+    <div class="row mt-4">
+        <div class="col-md-6 px-1">
+            <div class="p-3 bg-dark rounded h-100">
+                <div class="w-100 mb-3 d-flex justify-content-between align-items-center px-2">
+                    <h5 class="text-secondary mx-3">Monthly Payments</h5> 
+                </div>
+                <div class="p-4">
+                    <canvas id="paymentChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 px-1">
+            <div class="p-3 bg-dark rounded h-100">
+                <div class="w-100 mb-3 d-flex justify-content-between align-items-center px-2">
+                    <h5 class="text-secondary mx-3">Students By Grade</h5> 
+                </div>
+                <div class="p-4">
+                    <canvas id="gradeChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Charts End --}}
+
+    {{-- Recently Added Assignments Start --}}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="p-3 bg-dark rounded h-100">
+                <div class="w-100 mb-3 d-flex justify-content-between align-items-center px-2">
+                    <h5 class="text-secondary mx-3">Recently Added Assignments</h5> 
+                    <a href="#" class="btn btn-danger d-none d-md-block">Show All</a>                   
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                            <th>No</th>
+                            <th>Title</th>
+                            <th>Subject</th>
+                            <th>Uploaded By</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Submissions</th>
+                        </thead>
+                        <tbody>
+                            @for ($i = 0; $i < 5; $i++)
+                                <tr>
+                                    <td>{{ $i + 1 }}</td>
+                                    <td>{{ $faker->sentence }}</td>
+                                    <td>{{ $faker->word }}</td>
+                                    <td>{{ $faker->name }}</td>
+                                    <td>{{ $faker->date }}</td>
+                                    <td>{{ $faker->date }}</td>
+                                    <td>{{ $faker->numberBetween(0, 100) }}</td>
+                                </tr>
+                            @endfor
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Recently Added Assignments End --}}
+
+    {{-- Scripts Start --}}
+    @section('scripts')
+    <script>
+        // payment chart
+        const paymentChart = document.getElementById('paymentChart');
+        new Chart(paymentChart, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Red',
+                    'Blue',
+                    'Yellow'
+                ],
+                datasets: [{
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+        });
+
+        // grade chart
+        const gradeChart = document.getElementById('gradeChart');
+        new Chart(gradeChart, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Red',
+                    'Blue',
+                    'Yellow'
+                ],
+                datasets: [{
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+        })
+
+    </script>
+    @endsection
+    {{-- Scripts End --}}
 @endsection
