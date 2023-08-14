@@ -24,7 +24,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Path: routes/web.php
 Route::prefix('admin/')->group(function() {
-    Route::get('dashboard/', function () {
+    Route::get('dashboard/', function() {
         return view('admin.dashboard');
-    })->name('dashboard');
-})->name('admin.');
+    })->name('admin.dashboard');
+
+    Route::prefix('manage/')->group(function() {
+        Route::get('teachers/', function() {
+            return view('admin.teachers');
+        })->name('admin.teachers');
+    });
+});

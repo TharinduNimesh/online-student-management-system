@@ -4,27 +4,27 @@
         <img src="/img/logo.png" width="60%" />
     </div>
     <div class="d-flex flex-column align-items-center w-100">
-        <a class="nav-item active">
+        <a class="nav-item active" id="home" href="{{ route('admin.dashboard') }}">
             <i class="fas fa-home me-3"></i>
             <span class="nav-text">Home</span>
         </a>
-        <a class="nav-item">
+        <a class="nav-item" id="teachers" href="{{ route('admin.teachers') }}">
+            <i class="fa-solid fa-chalkboard-user me-2"></i>
+            <span class="nav-text">Manage Teachers</span>
+        </a>
+        <a class="nav-item" href="#">
             <i class="fas fa-home me-3"></i>
             <span class="nav-text">Home</span>
         </a>
-        <a class="nav-item">
+        <a class="nav-item" href="#">
             <i class="fas fa-home me-3"></i>
             <span class="nav-text">Home</span>
         </a>
-        <a class="nav-item">
+        <a class="nav-item" href="#">
             <i class="fas fa-home me-3"></i>
             <span class="nav-text">Home</span>
         </a>
-        <a class="nav-item">
-            <i class="fas fa-home me-3"></i>
-            <span class="nav-text">Home</span>
-        </a>
-        <a class="nav-item">
+        <a class="nav-item" href="#">
             <i class="fas fa-home me-3"></i>
             <span class="nav-text">Home</span>
         </a>

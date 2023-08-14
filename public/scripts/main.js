@@ -9,3 +9,11 @@ const toggleSideBar = () => {
         sidebar.classList.remove('d-none');
     }
 }
+
+const updateActiveMenu = currentItem => {
+    const items = document.querySelectorAll('.nav-item');
+    items.forEach(item => {
+        item.classList.remove('active');
+    });
+    document.querySelector(`#${currentItem}`).classList.add('active');
+}
