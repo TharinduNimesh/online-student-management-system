@@ -343,6 +343,11 @@ body {
     overflow-y: scroll;
     z-index: 1;
     scrollbar-width: none;
+    margin-left: -330px;
+}
+
+.user .nav-bar-show {
+    margin-left: 0;
 }
 
 .user .nav-bar .nav-item {
@@ -431,5 +436,9 @@ body {
     .user .footer {
         flex-direction: row;
         justify-content: space-between;
+    }
+
+    .user .nav-bar-lg-show {
+        margin-left: 0;
     }
 }

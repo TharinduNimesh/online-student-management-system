@@ -3,10 +3,11 @@ const toggleSideBar = () => {
     const status = sidebar.dataset.status;
     if(status == 'visible') {
         sidebar.dataset.status = 'hidden';
-        sidebar.classList.add('d-none');
+        sidebar.classList.add('nav-bar-show');
     } else {
         sidebar.dataset.status = 'visible';
-        sidebar.classList.remove('d-none');
+        sidebar.classList.remove('nav-bar-show');
+        sidebar.classList.remove('nav-bar-lg-show');
     }
 }
 

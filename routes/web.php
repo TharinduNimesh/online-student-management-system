@@ -38,4 +38,10 @@ Route::prefix('admin/')->group(function() {
             return view('admin.students');
         })->name('admin.students');
     });
+    Route::get('academic-information', function() {
+        return view('admin.academic');
+    })->name('admin.academic');
+    Route::get('payments', function() {
+        return view('admin.payments');
+    })->name('admin.payments');
 });

@@ -1,6 +1,5 @@
 @extends('base')
 
-
 @section('content')
     {{-- Content Start --}}
     <div class="user container-fluid bg-black p-0 d-flex overflow-hidden">
