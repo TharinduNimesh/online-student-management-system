@@ -34,5 +34,8 @@ Route::prefix('admin/')->group(function() {
         Route::get('officers', function() {
             return view('admin.officers');
         })->name('admin.officers');
+        Route::get('students', function() {
+            return view('admin.students');
+        })->name('admin.students');
     });
 });

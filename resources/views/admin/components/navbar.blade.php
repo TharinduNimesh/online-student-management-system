@@ -8,6 +8,10 @@
             <i class="fas fa-home me-3"></i>
             <span class="nav-text">Home</span>
         </a>
+        <a class="nav-item" id="students" href="{{ route('admin.students') }}">
+            <i class="fa-solid fa-graduation-cap me-3"></i>
+            <span class="nav-text">Manage Students</span>
+        </a>
         <a class="nav-item" id="teachers" href="{{ route('admin.teachers') }}">
             <i class="fa-solid fa-chalkboard-user me-3"></i>
             <span class="nav-text">Manage Teachers</span>
@@ -15,10 +19,6 @@
         <a class="nav-item" id="officers" href="{{ route('admin.officers') }}">
             <i class="fa-solid fa-user-tie me-3"></i>
             <span class="nav-text">Manage Staffs</span>
-        </a>
-        <a class="nav-item" href="#">
-            <i class="fas fa-home me-3"></i>
-            <span class="nav-text">Home</span>
         </a>
         <a class="nav-item" href="#">
             <i class="fas fa-home me-3"></i>
