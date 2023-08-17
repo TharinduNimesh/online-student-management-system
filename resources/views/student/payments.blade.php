@@ -41,11 +41,11 @@
                     <input type="text" class="form-control" maxlength="10" minlength="9">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label class="mx-3">Month
+                    <label class="mx-3">Grade
                         <span class="text-primary">:</span>
                     </label>
                     <select class="form-control">
-                        <option value="">Select A Month</option>
+                        <option value="">Select A Grade</option>
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -69,7 +69,7 @@
     {{-- Upload Pay Reciept Start --}}
     <div class="row mt-3">
         <div class="col-12 bg-dark p-3 rounded">
-            <h3 class="text-light mx-3">Upload Pay Receipt</h3>
+            <h3 class="text-light mx-3">Upload Paid Receipt</h3>
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="alert alert-danger mt-3 text-center">
@@ -79,11 +79,11 @@
             </div>
             <div class="row text-light mt-3">
                 <div class="col-md-6 mb-3">
-                    <label class="mx-3">Month
+                    <label class="mx-3">Grade
                         <span class="text-primary">:</span>
                     </label>
                     <select class="form-control">
-                        <option value="">Select A Month</option>
+                        <option value="">Select A Grade</option>
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -109,17 +109,12 @@
     <div class="row mt-3">
         <div class="col-12 p-3 bg-dark">
             <h3 class="text-light mx-3">Payment History</h3>
-            <label class="text-light mx-3 mt-3">
-                Payment History Of The 
-                <span class="text-primary">{{ date("Y") }}</span>
-                Year<span class="text-primary">.</span>    
-            </label>
-            <div class="table-responsive">
+            <div class="table-responsive mt-3">
                 <table class="table table-bordered-table-hover table-dark">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Month</th>
+                            <th>Grade</th>
                             <th>Status</th>
                             <th>Paid At</th>
                         </tr>
