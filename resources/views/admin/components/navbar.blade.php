@@ -6,7 +6,7 @@
     <div class="d-flex flex-column align-items-center w-100">
         <a class="nav-item" id="home" href="{{ route('admin.dashboard') }}">
             <i class="fas fa-home me-3"></i>
-            <span class="nav-text">Home</span>
+            <span class="nav-text">Dashboard</span>
         </a>
         <a class="nav-item" id="students" href="{{ route('admin.students') }}">
             <i class="fa-solid fa-graduation-cap me-3"></i>

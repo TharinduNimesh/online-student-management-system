@@ -22,7 +22,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Path: routes/web.php
+// Admin Routes
 Route::prefix('admin/')->group(function() {
     Route::get('dashboard/', function() {
         return view('admin.dashboard');
@@ -44,4 +44,17 @@ Route::prefix('admin/')->group(function() {
     Route::get('payments', function() {
         return view('admin.payments');
     })->name('admin.payments');
+});
+
+// Teacher Routes
+Route::prefix('teacher/')->group(function() {
+    Route::get('dashboard/', function() {
+        return view('teacher.dashboard');
+    })->name('teacher.dashboard');
+    Route::get('manage/assignments', function() {
+        return view('teacher.assignments');
+    })->name('teacher.assignments');
+    Route::get('manage/notes', function() {
+        return view('teacher.notes');
+    })->name('teacher.notes');
 });
