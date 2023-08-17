@@ -58,3 +58,22 @@ Route::prefix('teacher/')->group(function() {
         return view('teacher.notes');
     })->name('teacher.notes');
 });
+
+// Student Routes
+Route::prefix('student/')->group(function() {
+    Route::get('dashboard/', function() {
+        return view('student.dashboard');
+    })->name('student.dashboard');
+    Route::get('assignments/', function() {
+        return view('student.assignments');
+    })->name('student.assignments');
+    Route::get('manage/notes', function() {
+        return view('student.notes');
+    })->name('student.notes');
+    Route::get('manage/payments', function() {
+        return view('student.payments');
+    })->name('student.payments');
+    Route::get('manage/academic-information', function() {
+        return view('student.academic');
+    })->name('student.academic');
+});
