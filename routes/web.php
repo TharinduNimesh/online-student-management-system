@@ -73,7 +73,4 @@ Route::prefix('student/')->group(function() {
     Route::get('manage/payments', function() {
         return view('student.payments');
     })->name('student.payments');
-    Route::get('manage/academic-information', function() {
-        return view('student.academic');
-    })->name('student.academic');
 });

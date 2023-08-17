@@ -8,13 +8,17 @@
             <i class="fas fa-home me-3"></i>
             <span class="nav-text">Dashboard</span>
         </a>
-        <a class="nav-item" id="assignments" href="{{ route('teacher.assignments') }}">
+        <a class="nav-item" id="assignments" href="{{ route('student.assignments') }}">
             <i class="fa-solid fa-clipboard-check me-3"></i>
             <span class="nav-text">Assignments</span>
         </a>
-        <a class="nav-item" id="notes" href="{{ route('teacher.notes') }}">
+        <a class="nav-item" id="notes" href="{{ route('student.notes') }}">
             <i class="fa-solid fa-clipboard-list me-3"></i>
-            <span class="nav-text">Manage Notes</span>
+            <span class="nav-text">Lesson Notes</span>
+        </a>
+        <a class="nav-item" id="payments" href="{{ route('student.payments') }}">
+            <i class="fa-solid fa-credit-card me-3"></i>
+            <span class="nav-text">Payments</span>
         </a>
     </div>
 </div>
