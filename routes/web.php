@@ -74,3 +74,10 @@ Route::prefix('student/')->group(function() {
         return view('student.payments');
     })->name('student.payments');
 });
+
+// Officer Routes
+Route::prefix('officer/')->group(function() {
+    Route::get('dashboard/', function() {
+        return view('officer.dashboard');
+    })->name('officer.dashboard');
+});
