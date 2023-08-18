@@ -8,11 +8,11 @@
             <i class="fas fa-home me-3"></i>
             <span class="nav-text">Dashboard</span>
         </a>
-        <a class="nav-item" id="notes" href="{{ route('teacher.notes') }}">
+        <a class="nav-item" id="students" href="{{ route('officer.students') }}">
             <i class="fa-solid fa-graduation-cap me-3"></i>
             <span class="nav-text">Manage Students</span>
         </a>
-        <a class="nav-item" id="assignments" href="{{ route('teacher.assignments') }}">
+        <a class="nav-item" id="assignments" href="{{ route('officer.assignments') }}">
             <i class="fa-solid fa-clipboard-check me-3"></i>
             <span class="nav-text">Assignments</span>
         </a>

@@ -80,4 +80,10 @@ Route::prefix('officer/')->group(function() {
     Route::get('dashboard/', function() {
         return view('officer.dashboard');
     })->name('officer.dashboard');
+    Route::get('manage/students/', function() {
+        return view('officer.students');
+    })->name('officer.students');
+    Route::get('manage/assignments/', function() {
+        return view('officer.assignments');
+    })->name('officer.assignments');
 });

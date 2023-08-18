@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.officer')
 
 @section('title', 'Manage Students')
 
@@ -7,7 +7,7 @@
         $faker = Faker\Factory::create();
     @endphp
     {{-- All Students Start --}}
-    <div class="row mt-4">
+    <div class="row">
         <div class="col-12 px-1">
             <div class="p-3 bg-dark rounded-h-100">
                 <h3 class="text-light">All Students Informations</h3>
@@ -21,11 +21,6 @@
                                 <button class="btn btn-primary">
                                     <i class="fa-solid fa-copy mx-2"></i>
                                     Copy Invitation Link</button>
-                            </div>
-                            <div class="col-12 d-flex justify-content-end gap-2 px-5 mt-3">
-                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateAllStudentModal">
-                                    <i class="fa-solid fa-upload mx-2"></i>
-                                    Update All Students Grade</button>
                             </div>
                         </div>
                     </div>
@@ -58,10 +53,6 @@
                                             data-bs-target="#viewStudentModal">
                                             <i class="fa-solid fa-eye mx-2"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#updateStudentGrade">
-                                            <i class="fa-solid fa-upload mx-2"></i>
-                                        </button>
                                         <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#editStudentModal">
                                             <i class="fa-solid fa-edit mx-2"></i>
@@ -80,6 +71,43 @@
         </div>
     </div>
     {{-- All Student End --}}
+
+    {{-- Non Verified Students Start --}}
+    <div class="row mt-4">
+        <div class="col-12 p-3 bg-dark rounded h-100">
+            <h3 class="text-secondary mx-3">Non Verified Students</h3>
+            <div class="table-responsive mt-3">
+                <table class="table table-bordered table-dark table-hover">
+                    <thead>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        @for ($i = 0; $i < 5; $i++)
+                            <tr>
+                                <td>{{ $i + 1 }}</td>
+                                <td>{{ $faker->name }}</td>
+                                <td>{{ $faker->email }}</td>
+                                <td>077{{ $faker->numberBetween(1000000, 9999999) }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-primary px-3">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger px-3" data-bs-toggle="modal" data-bs-target="#removeStudentModal">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endfor
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{-- Non Verified Students End --}}
 
     {{-- Modals Start --}}
 
@@ -170,29 +198,6 @@
                             <input type="text" disabled class="form-control mb-3" placeholder="Ex: Male">
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-12 p-3">
-                            <h3 class="mx-3 ">Payment Information</h3>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover table-dark">
-                                    <thead>
-                                        <th>Year</th>
-                                        <th>Grade</th>
-                                        <th>Has Paid</th>
-                                    </thead>
-                                    <tbody>
-                                        @for ($i = 0; $i < 10; $i++)
-                                            <tr>
-                                                <td>{{ $faker->year }}</td>
-                                                <td>Grade {{ $i + 1 }}</td>
-                                                <td>{{ $faker->randomElement(['Yes', 'No']) }}</td>
-                                            </tr>
-                                        @endfor
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -201,27 +206,6 @@
         </div>
     </div>
     {{-- View Student Modal End --}}
-
-    {{-- Update Students Grade Start --}}
-    <div class="modal fade" id="updateStudentGrade" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bg-dark text-light">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">CAUTION</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>You are about to modify the student's grade by one point. Confirm this action?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- Update Students Grade End --}}
 
     {{-- Edit Student Modal Start --}}
     <div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -248,13 +232,7 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Date Of Birth</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: 2023-05-30">
-                        </div>
-                        <div class="col-12 text-center">
-                            <button class="btn btn-warning px-4">
-                                <i class="fa-solid fa-upload mx-2"></i>
-                                Update Student's Grade
-                            </button>
+                            <input type="date" class="form-control mb-3" placeholder="Ex: 2023-05-30">
                         </div>
                     </div>
                 </div>
