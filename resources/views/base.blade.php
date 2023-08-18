@@ -9,6 +9,7 @@
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/styles/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@sweetalert2/theme-dark@5.0.2/dark.min.css">
     <link rel="stylesheet" href="/styles/main.css" />
     <title>
         @yield('title') | SchoolPlus
@@ -22,6 +23,7 @@
     <script src="/scripts/jquery-min.js"></script>
     <script src="/scripts/bootstrap.bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/scripts/main.js"></script>
     @yield('scripts')
 </body>

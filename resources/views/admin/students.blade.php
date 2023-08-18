@@ -92,42 +92,46 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row px-3 py-2">
+                    <form class="row px-3 py-2" id="add_student_form">
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Full Name</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: John Doe">
+                            <input type="text" name="name" class="form-control mb-3" placeholder="Ex: John Doe">
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Email</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: johndoe@example.com">
+                            <input type="text" name="email" class="form-control mb-3" placeholder="Ex: johndoe@example.com">
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Mobile</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: 0771112223">
+                            <input type="text" name="mobile" class="form-control mb-3" placeholder="Ex: 0771112223">
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Date Of Birth</label>
-                            <input type="date" class="form-control mb-3" placeholder="Ex: 0771112223">
+                            <input type="date" name="dob" class="form-control mb-3" placeholder="Ex: 0771112223">
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">City</label>
-                            <select class="form-control mb-3">
+                            <select class="form-control mb-3" name="city">
                                 <option value="">Select The City</option>
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Gender</label>
-                            <select class="form-control mb-3">
+                            <select class="form-control mb-3" name="gender">
                                 <option value="">Select The Gender</option>
                                 <option value="1">Male</option>
                                 <option value="2">Female</option>
                             </select>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Add</button>
+                    @php($url = route('student.add'))
+                    <button type="button" class="btn btn-danger" onclick="addStudent('{{ $url }}');">Add</button>
                 </div>
             </div>
         </div>

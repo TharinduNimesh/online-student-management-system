@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\NavigationController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +37,8 @@ Route::prefix('admin/')->group(function() {
         Route::get('officers', function() {
             return view('admin.officers');
         })->name('admin.officers');
-        Route::get('students', function() {
-            return view('admin.students');
-        })->name('admin.students');
+        Route::get('students', [NavigationController::class, 'adminManageStudents'])
+        ->name('admin.students');
     });
     Route::get('academic-information', function() {
         return view('admin.academic');
@@ -89,5 +90,20 @@ Route::prefix('officer/')->group(function() {
     })->name('officer.assignments');
 });
 
-// Login Route
-Route::post('login', [UserController::class, 'login'])->name('auth.login');
+// auth Route
+Route::post('login', [UserController::class, 'login'])
+->name('auth.login');
+Route::get('logout', [UserController::class, 'logout'])
+->name('auth.logout');
+Route::post('set-password', [UserController::class, 'setPassword'])
+->name('auth.setPassword');
+
+// Register Route
+Route::post('add/student', [StudentController::class, 'create'])
+->name('student.add');
+
+// set password
+Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])
+->name('password.student');
+
+// Mail Routes
