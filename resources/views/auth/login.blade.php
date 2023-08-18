@@ -13,12 +13,15 @@
                         <h1 class="text-light">School<span class="text-primary">Plus</span></h1>
                         <p class="text-light">Empowering Education System While Pandemic</p>
                     </div>
+                    <div class="alert alert-danger text-center d-none" id="error-message">
+
+                    </div>
                     <div class="col-12">
                         <div class="input-group mb-4">
                             <span class="input-group-text bg-primary" id="basic-addon1">
                                 <i class="fa-solid fa-envelope"></i>
                             </span>
-                            <input type="text" class="form-control" placeholder="Email Address" aria-label="Username"
+                            <input type="text" id="email" class="form-control" placeholder="Email Address" aria-label="Username"
                                 aria-describedby="basic-addon1">
                         </div>
                     </div>
@@ -27,13 +30,14 @@
                             <span class="input-group-text bg-primary" id="basic-addon1">
                                 <i class="fa-solid fa-lock"></i>
                             </span>
-                            <input type="text" class="form-control" placeholder="Password" aria-label="Username"
+                            <input type="password" class="form-control" id="password" placeholder="Password" aria-label="Username"
                                 aria-describedby="basic-addon1">
                         </div>
                         <a href="#" class="text-primary">Forget Password ?</a>
                     </div>
                     <div class="col-12 d-flex flex-column align-items-center mt-3">
-                        <button class="btn btn-danger px-5">
+                        @php $url = route('auth.login'); @endphp
+                        <button class="btn btn-danger px-5" onclick="login('{{ $url }}');">
                             Sign In
                         </button>
                         <p class="mt-3 text-light">Go Back To 

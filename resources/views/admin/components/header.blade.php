@@ -15,7 +15,7 @@
                     <div class="online-dot"></div>
                     <img src="/img/user.png" style="width: 45px;" class="rounded-circle" />
                 </div>
-                <p class="m-0 font-bold d-none d-lg-block">John Doe</p>
+                <p class="m-0 font-bold d-none d-lg-block">{{ auth()->user()->name }}</p>
                 <div class="bars ms-1 ms-md-4 bg-primary text-light">
                     <i class="fa-solid fa-power-off"></i>
                 </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -87,3 +88,6 @@ Route::prefix('officer/')->group(function() {
         return view('officer.assignments');
     })->name('officer.assignments');
 });
+
+// Login Route
+Route::post('login', [UserController::class, 'login'])->name('auth.login');
