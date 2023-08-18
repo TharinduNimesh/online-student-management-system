@@ -12,23 +12,28 @@ class NavigationController extends Controller
     {
         // Get all cities
         $cities = City::all()
-        ->sortBy('name');
+            ->sortBy('name');
 
-        // Return view with cities
+        // Get all students
+        $students = Student::all();
+
+        // Return view with data
         return view('admin.students', [
-            'cities' => $cities
+            'cities' => $cities,
+            'students' => $students
         ]);
     }
 
-    protected function setPassword($role, $id) {
+    protected function setPassword($role, $id)
+    {
         $user = null;
-        if($role == "student") {
+        if ($role == "student") {
             $user = Student::find($id);
             $role_id = 5;
-        } else if($role == "teacher") {
+        } else if ($role == "teacher") {
             // $user = Teacher::find($id);
             $role_id = 4;
-        } else if($role == "officer") {
+        } else if ($role == "officer") {
             // $user = Officer::find($id);
             $role_id = 3;
         }

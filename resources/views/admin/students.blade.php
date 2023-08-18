@@ -23,7 +23,8 @@
                                     Copy Invitation Link</button>
                             </div>
                             <div class="col-12 d-flex justify-content-end gap-2 px-5 mt-3">
-                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateAllStudentModal">
+                                <button class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#updateAllStudentModal">
                                     <i class="fa-solid fa-upload mx-2"></i>
                                     Update All Students Grade</button>
                             </div>
@@ -46,33 +47,39 @@
                             <th>Actions</th>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < 10; $i++)
+                            @foreach ($students as $student)
                                 <tr>
-                                    <td>{{ $faker->numberBetween(1000, 9999) }}</td>
-                                    <td>{{ $faker->name }}</td>
-                                    <td>077{{ $faker->numberBetween(1000000, 9999999) }}</td>
+                                    <td>{{ $student->id }}</td>
+                                    <td>{{ $student->name }}</td>
+                                    <td>{{ $student->mobile }}</td>
                                     <td>{{ $faker->numberBetween(1, 14) }}</td>
-                                    <td>{{ $faker->date }}</td>
+                                    <td>
+                                        @if ($student->verified_at)
+                                            <span>{{ $student->verified_at }}</span>
+                                        @else
+                                            <span class="bg-primary">Not Verified</span>
+                                        @endif
+                                    </td>
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                            data-bs-target="#viewStudentModal">
+                                            data-bs-target="#viewStudentModal" data-student="{{ $student->id }}">
                                             <i class="fa-solid fa-eye mx-2"></i>
                                         </button>
                                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#updateStudentGrade">
+                                            data-bs-target="#updateStudentGrade" data-student="{{ $student->id }}">
                                             <i class="fa-solid fa-upload mx-2"></i>
                                         </button>
                                         <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#editStudentModal">
+                                            data-bs-target="#editStudentModal" data-student="{{ $student->id }}">
                                             <i class="fa-solid fa-edit mx-2"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#removeStudentModal">
+                                            data-bs-target="#removeStudentModal" data-student="{{ $student->id }}">
                                             <i class="fa-solid fa-trash mx-2"></i>
                                         </button>
                                     </td>
                                 </tr>
-                            @endfor
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -99,7 +106,8 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Email</label>
-                            <input type="text" name="email" class="form-control mb-3" placeholder="Ex: johndoe@example.com">
+                            <input type="text" name="email" class="form-control mb-3"
+                                placeholder="Ex: johndoe@example.com">
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Mobile</label>
@@ -131,7 +139,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     @php($url = route('student.add'))
-                    <button type="button" class="btn btn-danger" onclick="addStudent('{{ $url }}');">Add</button>
+                    <button type="button" class="btn btn-danger"
+                        onclick="addStudent('{{ $url }}');">Add</button>
                 </div>
             </div>
         </div>
@@ -139,7 +148,8 @@
     {{-- Add Student Modal End --}}
 
     {{-- View Student Modal Start --}}
-    <div class="modal fade" id="viewStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="viewStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content bg-dark text-light">
                 <div class="modal-header">
