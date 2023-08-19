@@ -106,12 +106,19 @@ Route::post('add/student', [StudentController::class, 'create'])
 Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])
 ->name('password.student');
 
-// assign student's grade
+// student's grade
 Route::post('assign/grade', [StudentController::class, 'assignGrade'])
 ->name('student.assign.grade');
+Route::get('update/grade/{student}', [StudentController::class, 'updateGrade'])
+->name('student.update.grade');
+
 
 // get routes
 Route::get('student/{id}', [StudentController::class, 'get'])
 ->name('student.get');
+
+// update routes
+Route::post('student/update', [StudentController::class, 'update'])
+->name('student.update');
 
 // Mail Routes

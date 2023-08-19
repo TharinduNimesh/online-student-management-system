@@ -227,20 +227,21 @@ const showStudent = (Button) => {
                 modal.querySelector("#mobile").value = res.student.mobile;
                 modal.querySelector("#dob").value = res.student.date_of_birth;
                 modal.querySelector("#city").value = res.student.city.name;
-                modal.querySelector("#gender").value = res.student.gender_id == 1 ? 'Male' : 'Female';
+                modal.querySelector("#gender").value =
+                    res.student.gender_id == 1 ? "Male" : "Female";
 
                 // set grades details
                 const table = modal.querySelector("#grades-body");
                 const grades = res.student.grades;
 
                 table.innerHTML = "";
-                grades.forEach(grade => {
-                    const row = document.createElement('tr');
+                grades.forEach((grade) => {
+                    const row = document.createElement("tr");
 
                     if (grade.has_paid == 1) {
-                        var paid = 'Yes';
+                        var paid = "Yes";
                     } else {
-                        var paid = 'No';
+                        var paid = "No";
                     }
 
                     row.innerHTML = `
@@ -250,7 +251,133 @@ const showStudent = (Button) => {
                     `;
                     table.appendChild(row);
                 });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
+            }
+        })
+        .catch((err) => console.log(err));
+};
 
+const updateStudentGrade = (Button) => {
+    // get student id
+    let id = Button.dataset.student;
+
+    $("#updateStudentGrade").modal("show");
+
+    // submit form if user click on confirm button
+    const modal = document.querySelector("#updateStudentGrade");
+    modal.querySelector(".btn-danger").addEventListener("click", () => {
+        $("#updateStudentGrade").modal("hide");
+        // submit form
+        document.getElementById("update-grade-form-" + id).submit();
+    });
+};
+
+const showEditStudent = (Button) => {
+    let id = Button.dataset.student;
+    const modal = document.querySelector("#editStudentModal");
+
+    fetch(`/student/${id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="_csrf"]')
+                .getAttribute("content"),
+        },
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            if (res.status == "success") {
+                modal.querySelector("#name").value = res.student.name;
+                modal.querySelector("#email").value = res.student.email;
+                modal.querySelector("#mobile").value = res.student.mobile;
+                modal.querySelector("#dob").value = res.student.date_of_birth;
+                modal.querySelector("#update-grade-button").value = id;
+
+                // submit update grade form
+                modal.querySelector("#update-grade-button").addEventListener("click", () => {
+                    document.getElementById("update-grade-form-" + id).submit();
+                });
+
+                modal.querySelector("#update-button").addEventListener("click", () => {
+                    const data = {
+                        name: modal.querySelector("#name").value,
+                        email: modal.querySelector("#email").value,
+                        mobile: modal.querySelector("#mobile").value,
+                        dob: modal.querySelector("#dob").value,
+                        id: id,
+                    };
+
+                    let isValid = true;
+
+                    Object.values(data).forEach((item) => {
+                        if(!item.trim()) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Please Fill All Fields",
+                            });
+                            isValid = false;
+                        }
+                    });
+
+                    if(!isValid) {
+                        return;
+                    }
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/student/update", true);
+                    xhr.setRequestHeader(
+                        "Content-Type",
+                        "application/json;charset=UTF-8"
+                    );
+                    xhr.setRequestHeader(
+                        "X-CSRF-TOKEN",
+                        document
+                            .querySelector('meta[name="_csrf"]')
+                            .getAttribute("content")
+                    );
+                    xhr.onload = function () {
+                        if (this.status == 200) {
+                            const res = JSON.parse(this.responseText);
+                            if (res.status == "success") {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Success",
+                                    text: "Student updated successfully",
+                                });
+                                $("#editStudentModal").modal("hide");
+                                location.reload();
+                            } else if(res.status == "error") {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "Student With This Email Already Exists",
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "Something went wrong!",
+                                });
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Internal Server Error",
+                            });
+                        }
+                    }
+                    xhr.send(JSON.stringify(data));
+                });
+
+                $("#editStudentModal").modal("show");
             } else {
                 Swal.fire({
                     icon: "error",

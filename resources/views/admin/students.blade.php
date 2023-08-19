@@ -74,16 +74,20 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-success" 
-                                         onclick="showStudent(this)" data-student="{{ $student->id }}">
+                                        <button class="btn btn-sm btn-success" onclick="showStudent(this)"
+                                            data-student="{{ $student->id }}">
                                             <i class="fa-solid fa-eye mx-2"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#updateStudentGrade" data-student="{{ $student->id }}">
-                                            <i class="fa-solid fa-upload mx-2"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#editStudentModal" data-student="{{ $student->id }}">
+                                        <form  action="{{ route('student.update.grade', [
+                                            'student' => $student->id,
+                                        ]) }}" class="d-inline-block" id="update-grade-form-{{ $student->id }}">
+                                            <button type="button" class="btn btn-sm btn-warning" onclick="updateStudentGrade(this)" 
+                                            data-student="{{ $student->id }}">
+                                                <i class="fa-solid fa-upload mx-2"></i>
+                                            </button>
+                                        </form>
+                                        <button class="btn btn-sm btn-primary" onclick="showEditStudent(this)"
+                                            data-student="{{ $student->id }}">
                                             <i class="fa-solid fa-edit mx-2"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
@@ -243,28 +247,33 @@
                 <div class="row px-3 py-2">
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Full Name</label>
-                        <input type="text" id="name" disabled class="form-control mb-3" placeholder="Ex: John Doe">
+                        <input type="text" id="name" disabled class="form-control mb-3"
+                            placeholder="Ex: John Doe">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Email</label>
-                        <input type="text" disabled class="form-control mb-3"
-                            id="email" placeholder="Ex: johndoe@example.com">
+                        <input type="text" disabled class="form-control mb-3" id="email"
+                            placeholder="Ex: johndoe@example.com">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Mobile</label>
-                        <input type="text" disabled class="form-control mb-3" id="mobile" placeholder="Ex: 0771112223">
+                        <input type="text" disabled class="form-control mb-3" id="mobile"
+                            placeholder="Ex: 0771112223">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Date Of Birth</label>
-                        <input type="text" disabled class="form-control mb-3" id="dob" placeholder="Ex: 2023-05-30">
+                        <input type="text" disabled class="form-control mb-3" id="dob"
+                            placeholder="Ex: 2023-05-30">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">City</label>
-                        <input type="text" disabled class="form-control mb-3" id="city" placeholder="Ex: Colombo">
+                        <input type="text" disabled class="form-control mb-3" id="city"
+                            placeholder="Ex: Colombo">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Gender</label>
-                        <input type="text" disabled class="form-control mb-3" id="gender" placeholder="Ex: Male">
+                        <input type="text" disabled class="form-control mb-3" id="gender"
+                            placeholder="Ex: Male">
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -277,15 +286,7 @@
                                     <th>Grade</th>
                                     <th>Has Paid</th>
                                 </thead>
-                                <tbody id="grades-body">
-                                    @for ($i = 0; $i < 10; $i++)
-                                        <tr>
-                                            <td>{{ $faker->year }}</td>
-                                            <td>Grade {{ $i + 1 }}</td>
-                                            <td>{{ $faker->randomElement(['Yes', 'No']) }}</td>
-                                        </tr>
-                                    @endfor
-                                </tbody>
+                                <tbody id="grades-body"></tbody>
                             </table>
                         </div>
                     </div>
@@ -313,7 +314,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Confirm</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Confirm</button>
             </div>
         </div>
     </div>
@@ -333,22 +334,22 @@
                 <div class="row px-3 py-2">
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Full Name</label>
-                        <input type="text" class="form-control mb-3" placeholder="Ex: John Doe">
+                        <input type="text" id="name" class="form-control mb-3" placeholder="Ex: John Doe">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Email</label>
-                        <input type="text" class="form-control mb-3" placeholder="Ex: johndoe@example.com">
+                        <input type="text" id="email" class="form-control mb-3" placeholder="Ex: johndoe@example.com">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Mobile</label>
-                        <input type="text" class="form-control mb-3" placeholder="Ex: 0771112223">
+                        <input type="text" id="mobile" class="form-control mb-3" placeholder="Ex: 0771112223">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Date Of Birth</label>
-                        <input type="text" class="form-control mb-3" placeholder="Ex: 2023-05-30">
+                        <input type="date" id="dob" class="form-control mb-3" placeholder="Ex: 2023-05-30">
                     </div>
                     <div class="col-12 text-center">
-                        <button class="btn btn-warning px-4">
+                        <button class="btn btn-warning px-4" id="update-grade-button">
                             <i class="fa-solid fa-upload mx-2"></i>
                             Update Student's Grade
                         </button>
@@ -357,7 +358,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Update</button>
+                <button type="button" class="btn btn-danger" id="update-button">Update</button>
             </div>
         </div>
     </div>
