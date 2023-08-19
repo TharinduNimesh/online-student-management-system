@@ -200,6 +200,64 @@ const checkPassword = (input) => {
 };
 
 const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
+};
+
+const showStudent = (Button) => {
+    let id = Button.dataset.student;
+    const modal = document.querySelector("#viewStudentModal");
+
+    fetch(`/student/${id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="_csrf"]')
+                .getAttribute("content"),
+        },
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            if (res.status == "success") {
+                $("#viewStudentModal").modal("show");
+                modal.querySelector("#name").value = res.student.name;
+                modal.querySelector("#email").value = res.student.email;
+                modal.querySelector("#mobile").value = res.student.mobile;
+                modal.querySelector("#dob").value = res.student.date_of_birth;
+                modal.querySelector("#city").value = res.student.city.name;
+                modal.querySelector("#gender").value = res.student.gender_id == 1 ? 'Male' : 'Female';
+
+                // set grades details
+                const table = modal.querySelector("#grades-body");
+                const grades = res.student.grades;
+
+                table.innerHTML = "";
+                grades.forEach(grade => {
+                    const row = document.createElement('tr');
+
+                    if (grade.has_paid == 1) {
+                        var paid = 'Yes';
+                    } else {
+                        var paid = 'No';
+                    }
+
+                    row.innerHTML = `
+                        <td>${grade.year}</td>
+                        <td>${grade.grade}</td>
+                        <td>${paid}</td>
+                    `;
+                    table.appendChild(row);
+                });
+
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
+            }
+        })
+        .catch((err) => console.log(err));
 };

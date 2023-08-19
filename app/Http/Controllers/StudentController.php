@@ -59,4 +59,17 @@ class StudentController extends Controller
         // return to previous page
         return redirect()->back();
     }
+
+    public function get($id) {
+        // get student
+        $student = Student::with('grades')
+        ->with('city')
+        ->find($id);
+        
+        // return response
+        return response()->json([
+            'status' => 'success',
+            'student' => $student
+        ]);
+    }
 }

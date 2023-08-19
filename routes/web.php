@@ -110,4 +110,8 @@ Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPasswor
 Route::post('assign/grade', [StudentController::class, 'assignGrade'])
 ->name('student.assign.grade');
 
+// get routes
+Route::get('student/{id}', [StudentController::class, 'get'])
+->name('student.get');
+
 // Mail Routes

@@ -74,8 +74,8 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                            data-bs-target="#viewStudentModal" data-student="{{ $student->id }}">
+                                        <button class="btn btn-sm btn-success" 
+                                         onclick="showStudent(this)" data-student="{{ $student->id }}">
                                             <i class="fa-solid fa-eye mx-2"></i>
                                         </button>
                                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
@@ -243,28 +243,28 @@
                 <div class="row px-3 py-2">
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Full Name</label>
-                        <input type="text" disabled class="form-control mb-3" placeholder="Ex: John Doe">
+                        <input type="text" id="name" disabled class="form-control mb-3" placeholder="Ex: John Doe">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Email</label>
                         <input type="text" disabled class="form-control mb-3"
-                            placeholder="Ex: johndoe@example.com">
+                            id="email" placeholder="Ex: johndoe@example.com">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Mobile</label>
-                        <input type="text" disabled class="form-control mb-3" placeholder="Ex: 0771112223">
+                        <input type="text" disabled class="form-control mb-3" id="mobile" placeholder="Ex: 0771112223">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Date Of Birth</label>
-                        <input type="text" disabled class="form-control mb-3" placeholder="Ex: 2023-05-30">
+                        <input type="text" disabled class="form-control mb-3" id="dob" placeholder="Ex: 2023-05-30">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">City</label>
-                        <input type="text" disabled class="form-control mb-3" placeholder="Ex: Colombo">
+                        <input type="text" disabled class="form-control mb-3" id="city" placeholder="Ex: Colombo">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Gender</label>
-                        <input type="text" disabled class="form-control mb-3" placeholder="Ex: Male">
+                        <input type="text" disabled class="form-control mb-3" id="gender" placeholder="Ex: Male">
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -277,7 +277,7 @@
                                     <th>Grade</th>
                                     <th>Has Paid</th>
                                 </thead>
-                                <tbody>
+                                <tbody id="grades-body">
                                     @for ($i = 0; $i < 10; $i++)
                                         <tr>
                                             <td>{{ $faker->year }}</td>
