@@ -20,14 +20,18 @@ class NavigationController extends Controller
         // Get non grade students doesn't have grade in this year
         $non_grade_students = Student::whereDoesntHave('grades', function ($query) use ($currentYear) {
             $query->where('year', $currentYear);
-        })->get()
+        })
+        ->where('is_removed', 0)
+        ->get()
         ->sortBy('name');
 
 
         // graded students
         $graded_students = Student::whereHas('grades', function ($query) use ($currentYear) {
             $query->where('year', $currentYear);
-            })->get()
+            })
+            ->where('is_removed', 0)
+            ->get()
             ->sortBy('grades.grade');
 
         // Return view with data

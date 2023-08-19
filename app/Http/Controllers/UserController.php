@@ -45,6 +45,44 @@ class UserController extends Controller
         }
     }
 
+    protected function register(Request $request) {
+        // check if user already exists
+        $user = User::where('email', $request->email)->first();
+        if($user) {
+            return redirect()->back()->with('error', 'User already exists With this email');
+        }
+
+        $modal = null;
+        if($request->role == 'student') {
+            $modal = Student::class;
+            $role_id = 5;
+        } else if($request->role == 'teacher') {
+            // $modal = Teacher::class;
+            $role_id = 4;
+        } else if($request->role == 'officer') {
+            // $modal = Officer::class;
+            $role_id = 3;
+        }
+
+        // create user
+        $modal::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'city_id' => $request->city,
+            'gender_id' => $request->gender,
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role_id' => $role_id,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'Your request has been sent successfully. Please wait for the admin to verify your account.');
+    }
+
     protected function setPassword(Request $request) {
         // update student as verified
         $student = Student::find($request->id);

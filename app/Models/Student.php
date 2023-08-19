@@ -18,6 +18,7 @@ class Student extends Model
         'city_id',
         'gender_id',
         'verified_at',
+        'is_removed'
     ];
 
     public $timestamps = false;

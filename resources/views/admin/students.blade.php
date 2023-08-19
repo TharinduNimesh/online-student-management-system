@@ -18,7 +18,19 @@
                                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudentModal">
                                     <i class="fa-solid fa-user-plus mx-2"></i>
                                     Add A New Student</button>
-                                <button class="btn btn-primary">
+                                <button 
+                                    class="btn btn-primary" 
+                                    data-toggle="popover" 
+                                    data-bs-custom-class="custom-popover"
+                                    data-bs-trigger="focus"
+                                    data-bs-title="Success!"
+                                    data-bs-content="Invitation Link Copied Successfully !!!" 
+                                    data-bs-placement="top"
+                                    data-link="{{ route('auth.register.invite', [
+                                        'role' => 'student',
+                                    ]) }}"
+                                    onclick="copyLink(this)"
+                                    >
                                     <i class="fa-solid fa-copy mx-2"></i>
                                     Copy Invitation Link</button>
                             </div>
@@ -78,11 +90,13 @@
                                             data-student="{{ $student->id }}">
                                             <i class="fa-solid fa-eye mx-2"></i>
                                         </button>
-                                        <form  action="{{ route('student.update.grade', [
-                                            'student' => $student->id,
-                                        ]) }}" class="d-inline-block" id="update-grade-form-{{ $student->id }}">
-                                            <button type="button" class="btn btn-sm btn-warning" onclick="updateStudentGrade(this)" 
-                                            data-student="{{ $student->id }}">
+                                        <form
+                                            action="{{ route('student.update.grade', [
+                                                'student' => $student->id,
+                                            ]) }}"
+                                            class="d-inline-block" id="update-grade-form-{{ $student->id }}">
+                                            <button type="button" class="btn btn-sm btn-warning"
+                                                onclick="updateStudentGrade(this)" data-student="{{ $student->id }}">
                                                 <i class="fa-solid fa-upload mx-2"></i>
                                             </button>
                                         </form>
@@ -90,10 +104,14 @@
                                             data-student="{{ $student->id }}">
                                             <i class="fa-solid fa-edit mx-2"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#removeStudentModal" data-student="{{ $student->id }}">
-                                            <i class="fa-solid fa-trash mx-2"></i>
-                                        </button>
+                                        <form action="/student/delete/{{ $student->id }}" class="d-inline-block"
+                                            id="remove-student-form-{{ $student->id }}">
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                onclick="removeStudent(this)" data-bs-target="#removeStudentModal"
+                                                data-student="{{ $student->id }}">
+                                                <i class="fa-solid fa-trash mx-2"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -338,7 +356,8 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Email</label>
-                        <input type="text" id="email" class="form-control mb-3" placeholder="Ex: johndoe@example.com">
+                        <input type="text" id="email" class="form-control mb-3"
+                            placeholder="Ex: johndoe@example.com">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="mx-2">Mobile</label>

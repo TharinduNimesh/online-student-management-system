@@ -388,3 +388,55 @@ const showEditStudent = (Button) => {
         })
         .catch((err) => console.log(err));
 };
+
+const removeStudent = (Button) => {
+    let id = Button.dataset.student;
+    const modal = document.querySelector("#removeStudentModal");
+
+    modal.querySelector(".btn-danger").addEventListener("click", () => {
+        $("#removeStudentModal").modal("hide");
+        // submit form
+        document.getElementById("remove-student-form-" + id).submit();
+    });
+
+    $("#removeStudentModal").modal("show");
+}
+
+const register = () => {
+    const form = document.querySelector("#user-register-form");
+    const message = document.querySelector("#error-message");
+    message.classList.add("d-none");
+
+    let isValid = true;
+    form.querySelectorAll(".form-control").forEach((input) => {
+        input.classList.remove("is-invalid");
+        if (!input.value) {
+            input.classList.add("is-invalid");
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        message.innerHTML = "Please Fill All Fields";
+        message.classList.remove("d-none");
+        return;
+    }
+
+    if(!validatePassword(form.password.value)) {
+        message.innerHTML = "Password must be at least 8 characters long and contain at least one number, one uppercase and one lowercase letter";
+        message.classList.remove("d-none");
+        return;
+    }
+
+    form.submit();
+}
+
+const copyLink = (Button) => {
+    // copy link to clipboard
+    let link = Button.dataset.link;
+    navigator.clipboard.writeText(link);
+}
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});

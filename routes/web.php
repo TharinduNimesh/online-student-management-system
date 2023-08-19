@@ -97,10 +97,16 @@ Route::get('logout', [UserController::class, 'logout'])
 ->name('auth.logout');
 Route::post('set-password', [UserController::class, 'setPassword'])
 ->name('auth.setPassword');
+Route::get('register-form/{role}', function() {
+    return view('auth.register');
+})->name('auth.register.invite');
+Route::post('register', [UserController::class, 'register'])
+->name('auth.register');
 
 // Register Route
 Route::post('add/student', [StudentController::class, 'create'])
 ->name('student.add');
+
 
 // set password
 Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])
@@ -112,7 +118,6 @@ Route::post('assign/grade', [StudentController::class, 'assignGrade'])
 Route::get('update/grade/{student}', [StudentController::class, 'updateGrade'])
 ->name('student.update.grade');
 
-
 // get routes
 Route::get('student/{id}', [StudentController::class, 'get'])
 ->name('student.get');
@@ -120,5 +125,9 @@ Route::get('student/{id}', [StudentController::class, 'get'])
 // update routes
 Route::post('student/update', [StudentController::class, 'update'])
 ->name('student.update');
+
+// delete routes
+Route::get('student/delete/{id}', [StudentController::class, 'delete'])
+->name('student.delete');
 
 // Mail Routes

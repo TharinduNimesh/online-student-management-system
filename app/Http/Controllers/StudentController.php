@@ -115,4 +115,17 @@ class StudentController extends Controller
         // return to previous page
         return redirect()->back();
     }
+
+    public function delete($id) {
+        // get student
+        $student = Student::find($id);
+
+        // delete student
+        $student->update([
+            'is_removed' => 1
+        ]);
+
+        // return response
+        return redirect()->back();
+    }
 }
