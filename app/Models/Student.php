@@ -21,4 +21,14 @@ class Student extends Model
     ];
 
     public $timestamps = false;
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function grades()
+    {
+        return $this->hasMany(AcademicInformation::class, 'student_id');
+    }
 }

@@ -9,4 +9,14 @@ class City extends Model
 {
     use HasFactory;
     protected $table = 'cities';
+
+    protected $fillable = [
+        'name',
+    ];
+    public $timestamps = false;
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
 }

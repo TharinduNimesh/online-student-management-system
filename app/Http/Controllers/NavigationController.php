@@ -14,13 +14,27 @@ class NavigationController extends Controller
         $cities = City::all()
             ->sortBy('name');
 
-        // Get all students
-        $students = Student::all();
+        // Get current year
+        $currentYear = date('Y');
+
+        // Get non grade students doesn't have grade in this year
+        $non_grade_students = Student::whereDoesntHave('grades', function ($query) use ($currentYear) {
+            $query->where('year', $currentYear);
+        })->get()
+        ->sortBy('name');
+
+
+        // graded students
+        $graded_students = Student::whereHas('grades', function ($query) use ($currentYear) {
+            $query->where('year', $currentYear);
+            })->get()
+            ->sortBy('grades.grade');
 
         // Return view with data
         return view('admin.students', [
             'cities' => $cities,
-            'students' => $students
+            'non_grade_students' => $non_grade_students,
+            'graded_students' => $graded_students,
         ]);
     }
 

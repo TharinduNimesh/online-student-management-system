@@ -42,4 +42,21 @@ class StudentController extends Controller
             'status' => 'success',
         ]);
     }
+
+    public function assignGrade(Request $request) {
+        // validate grade is not empty and not a string
+        $request->validate([
+            'grade' => 'required|integer'
+        ]);
+
+        // assign grade
+        $student = Student::find($request->student_id);
+        $student->grades()->create([
+            'year' => date('Y'),
+            'grade' => $request->grade,
+        ]);
+
+        // return to previous page
+        return redirect()->back();
+    }
 }
