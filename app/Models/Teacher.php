@@ -34,4 +34,8 @@ class Teacher extends Model
     public function grades() {
         return $this->hasMany(TeacherGrade::class);
     }
+
+    public function assignments() {
+        return $this->hasMany(Assignment::class, 'uploaded_by');
+    }
 }

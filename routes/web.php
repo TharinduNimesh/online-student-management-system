@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -53,9 +54,8 @@ Route::prefix('teacher/')->group(function() {
     Route::get('dashboard/', function() {
         return view('teacher.dashboard');
     })->name('teacher.dashboard');
-    Route::get('manage/assignments', function() {
-        return view('teacher.assignments');
-    })->name('teacher.assignments');
+    Route::get('manage/assignments', [NavigationController::class, 'teacherManageAssignments'])
+    ->name('teacher.assignments');
     Route::get('manage/notes', function() {
         return view('teacher.notes');
     })->name('teacher.notes');
@@ -103,7 +103,7 @@ Route::get('register-form/{role}', function() {
 Route::post('register', [UserController::class, 'register'])
 ->name('auth.register');
 
-// Register Route
+// add Route
 Route::post('add/student', [StudentController::class, 'create'])
 ->name('student.add');
 Route::post('add/teacher', [TeacherController::class, 'create'])
@@ -112,6 +112,8 @@ Route::post('/teacher/add-subject/', [TeacherController::class, 'addSubject'])
 ->name('teacher.add.subject');
 Route::post('/teacher/add-grade/', [TeacherController::class, 'addGrade'])
 ->name('teacher.add.grade');
+Route::post('/teacher/add-assignment/', [AssignmentController::class, 'create'])
+->name('teacher.add.assignment');
 
 // set password
 Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])

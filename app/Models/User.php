@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class, 'uploaded_by');
+    }
 }

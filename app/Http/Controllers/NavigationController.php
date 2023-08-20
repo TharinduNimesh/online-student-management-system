@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NavigationController extends Controller
@@ -84,6 +85,33 @@ class NavigationController extends Controller
         return view('auth.set-password', [
             'user' => $user,
             'role' => $role_id
+        ]);
+    }
+
+    protected function teacherManageAssignments()
+    {
+        // all teacher's subjects
+        $subjects = Teacher::where('email', auth()->user()->email)
+            ->first()
+            ->subjects()
+            ->get();
+
+        // Teacher's Grades
+        $grades = Teacher::where('email', auth()->user()->email)
+            ->first()
+            ->grades()
+            ->get();
+
+        // Get Teacher's Assignments
+        $assignments = Teacher::where('email', auth()->user()->email)
+            ->first()
+            ->assignments
+            ->sortByDesc('started_at');
+            
+        return view('teacher.assignments', [
+            'subjects' => $subjects,
+            'grades' => $grades,
+            'assignments' => $assignments,
         ]);
     }
 }
