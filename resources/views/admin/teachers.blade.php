@@ -87,8 +87,8 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#viewTeacherModal">
+                                    <button class="btn btn-sm btn-success" data-teacher="{{ $teacher->id }}"
+                                        onclick="showTeacher(this);">
                                         <i class="fa-solid fa-eye mx-2"></i>
                                     </button>
                                     <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
@@ -175,23 +175,23 @@
                     <div class="row px-3 py-2">
                         <div class="col-12">
                             <label class="mx-2">Full Name</label>
-                            <input type="text" disabled class="form-control mb-3" placeholder="Ex: John Doe">
+                            <input type="text" id="name" disabled class="form-control mb-3" placeholder="Ex: John Doe">
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Email</label>
-                            <input type="text" disabled class="form-control mb-3" placeholder="Ex: John Doe">
+                            <input type="text" id="email" disabled class="form-control mb-3" placeholder="Ex: John Doe">
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Mobile</label>
-                            <input type="text" disabled class="form-control mb-3" placeholder="Ex: John Doe">
+                            <input type="text" id="mobile" disabled class="form-control mb-3" placeholder="Ex: John Doe">
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">City</label>
-                            <input type="text" disabled class="form-control mb-3" placeholder="Ex: John Doe">
+                            <input type="text" id="city" disabled class="form-control mb-3" placeholder="Ex: John Doe">
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="mx-2">Gender</label>
-                            <input type="text" disabled class="form-control mb-3" placeholder="Ex: John Doe">
+                            <input type="text" id="gender" disabled class="form-control mb-3" placeholder="Ex: John Doe">
                         </div>
                     </div>
                     <hr>
@@ -207,19 +207,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @for ($i = 0; $i < 5; $i++)
-                                            <tr>
-                                                <td>{{ $i + 1 }}</td>
-                                                <td>Subject {{ $i + 1 }}</td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-sm btn-danger">
-                                                        <i class="fa-solid fa-trash mx-2"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endfor
-                                    </tbody>
+                                    <tbody id="subjects-body"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -235,19 +223,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @for ($i = 0; $i < 5; $i++)
-                                            <tr>
-                                                <td>{{ $i + 1 }}</td>
-                                                <td>Grade - {{ $i + 1 }}</td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-sm btn-danger">
-                                                        <i class="fa-solid fa-trash mx-2"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endfor
-                                    </tbody>
+                                    <tbody id="grades-body"></tbody>
                                 </table>
                             </div>
                         </div>

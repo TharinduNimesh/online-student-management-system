@@ -26,4 +26,12 @@ class Teacher extends Model
     public function city() {
         return $this->belongsTo(City::class, 'city_id');
     }
+
+    public function subjects() {
+        return $this->belongsToMany(Subject::class, 'teacher_has_subjects');
+    }
+
+    public function grades() {
+        return $this->hasMany(TeacherGrade::class);
+    }
 }

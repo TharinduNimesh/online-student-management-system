@@ -460,6 +460,174 @@ const addTeacher = () => {
     form.submit();
 }
 
+const showTeacher = Button => {
+    const teacher = Button.dataset.teacher;
+    const modal = document.querySelector("#viewTeacherModal");
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `/teacher/${teacher}`, true);
+    xhr.onload = function () {
+        if(xhr.status === 200) {
+            const res = JSON.parse(this.responseText);
+            if(res.status === "success") {
+                const subjects_table = modal.querySelector("#subjects-body");
+                if(res.teacher.gender_id == 1) {
+                    var gender = 'Male';
+                } else {
+                    var gender = 'Female';
+                }
+
+                modal.querySelector("#name").value = res.teacher.name;
+                modal.querySelector("#email").value = res.teacher.email;
+                modal.querySelector("#mobile").value = res.teacher.mobile;
+                modal.querySelector("#city").value = res.teacher.city.name;
+                modal.querySelector("#gender").value = gender;
+
+                const subjects = res.teacher.subjects;
+                subjects_table.innerHTML = "";
+                
+                if (subjects.length > 0) {
+                    subjects.forEach((subject, index) => {
+                        subjects_table.innerHTML += `
+                            <tr id='subject-row-${res.teacher.id}-${subject.id}'>
+                                <td>${index + 1}</td>
+                                <td>${subject.name}</td>
+                                <td>
+                                <button 
+                                    class="btn btn-sm btn-danger" 
+                                    onclick="removeSubjectFromTeacher(this)"
+                                    data-teacher="${res.teacher.id}"
+                                    data-subject="${subject.id}"    
+                                >
+                                    <i class="fa-solid fa-trash mx-2"></i>
+                                </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    subjects_table.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="bg-primary font-bold text-center">No Any Subjects Found</td>
+                        </tr>
+                    `;
+                }
+
+                const grades_table = modal.querySelector("#grades-body");
+                const grades = res.teacher.grades;
+                grades_table.innerHTML = "";
+
+                if (grades.length > 0) {
+                    grades.forEach((grade, index) => {
+                        grades_table.innerHTML += `
+                            <tr id='grade-row-${grade.id}'>
+                                <td>${index + 1}</td>
+                                <td>Grade - ${grade.grade}</td>
+                                <td>
+                                <button
+
+                                    class="btn btn-sm btn-danger"
+                                    onclick="removeGradeFromTeacher(this)"
+                                    data-id="${grade.id}"
+                                >
+                                    <i class="fa-solid fa-trash mx-2"></i>
+                                </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    grades_table.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="bg-primary font-bold text-center">No Any Grades Found</td>
+                        </tr>
+                    `;
+                }
+
+                $("#viewTeacherModal").modal("show");
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
+            }
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Internal Server Error",
+            });
+        }
+    }
+    xhr.send();
+}
+
+const removeSubjectFromTeacher = Button => {
+    var xhr = new XMLHttpRequest();
+    data = {
+        teacher: Button.dataset.teacher,
+        subject: Button.dataset.subject,
+    };
+
+    xhr.open("POST", `/teacher/remove-subject/`, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("X-CSRF-TOKEN", document.querySelector('meta[name="_csrf"]').getAttribute('content'));
+    xhr.onload = function () {
+        if(xhr.status === 200) {
+            const res = JSON.parse(this.responseText);
+            if(res.status === "success") {
+                document.querySelector(`#subject-row-${data.teacher}-${data.subject}`).remove();
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
+            }
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Internal Server Error",
+            });
+        }
+    }
+    xhr.send(JSON.stringify(data));
+}
+
+const removeGradeFromTeacher = Button => {
+    var xhr = new XMLHttpRequest();
+    data = {
+        id: Button.dataset.id,
+    };
+
+    xhr.open("POST", `/teacher/remove-grade/`, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("X-CSRF-TOKEN", document.querySelector('meta[name="_csrf"]').getAttribute('content'));
+    xhr.onload = function () {
+        if(xhr.status === 200) {
+            const res = JSON.parse(this.responseText);
+            if(res.status === "success") {
+                document.querySelector(`#grade-row-${data.id}`).remove();
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
+            }
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Internal Server Error",
+            });
+        }
+    }
+    xhr.send(JSON.stringify(data));
+}
+
 const copyLink = (Button) => {
     // copy link to clipboard
     let link = Button.dataset.link;
