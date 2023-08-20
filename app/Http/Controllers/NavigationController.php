@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class NavigationController extends Controller
@@ -42,6 +43,21 @@ class NavigationController extends Controller
         ]);
     }
 
+    protected function adminManageTeacher(Request $request) {
+        $ciites = City::all()
+            ->sortBy('name');
+
+        $teachers = Teacher::where('is_removed', 0)
+            ->with('city')
+            ->get()
+            ->sortBy('name');
+
+        return view('admin.teachers', [
+            'cities' => $ciites,
+            'teachers' => $teachers,
+        ]);
+    }
+
     protected function setPassword($role, $id)
     {
         $user = null;
@@ -49,7 +65,7 @@ class NavigationController extends Controller
             $user = Student::find($id);
             $role_id = 5;
         } else if ($role == "teacher") {
-            // $user = Teacher::find($id);
+            $user = Teacher::find($id);
             $role_id = 4;
         } else if ($role == "officer") {
             // $user = Officer::find($id);

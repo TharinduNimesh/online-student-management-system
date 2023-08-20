@@ -47,6 +47,16 @@
                             Copy Invitation Link</button>
                     </div>
                 </div>
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @elseif(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <div class="row my-3">
                     <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
                         <input type="text" class="form-control" placeholder="Teacher's name">
@@ -59,31 +69,39 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>City</th>
+                            <th>Verified At</th>
                             <th>Actions</th>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < 10; $i++)
-                                <tr>
-                                    <td>{{ $faker->numberBetween(1000, 9999) }}</td>
-                                    <td>{{ $faker->name }}</td>
-                                    <td>{{ $faker->email }}</td>
-                                    <td>{{ $faker->city }}</td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                            data-bs-target="#viewTeacherModal">
-                                            <i class="fa-solid fa-eye mx-2"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#editTeacherModal">
-                                            <i class="fa-solid fa-edit mx-2"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#removeTeacherModal">
-                                            <i class="fa-solid fa-trash mx-2"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endfor
+                            @foreach ($teachers as $teacher)
+                            <tr>
+                                <td>{{ $teacher->id }}</td>
+                                <td>{{ $teacher->name }}</td>
+                                <td>{{ $teacher->email }}</td>
+                                <td>{{ $teacher->city->name }}</td>
+                                <td>
+                                    @if ($teacher->verified_at)
+                                        {{ $teacher->verified_at }}
+                                    @else
+                                        <span class="text-danger">Not Verified</span>                                        
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#viewTeacherModal">
+                                        <i class="fa-solid fa-eye mx-2"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editTeacherModal">
+                                        <i class="fa-solid fa-edit mx-2"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#removeTeacherModal">
+                                        <i class="fa-solid fa-trash mx-2"></i>
+                                    </button>
+                                </td>
+                            </tr> 
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -97,7 +115,8 @@
     {{-- Add Teacher Modal Start --}}
     <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content bg-dark text-light">
+            <form class="modal-content bg-dark text-light" id="add-teacher-form" action="{{ route('teacher.add') }}" method="POST">
+                @csrf
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Add A New Teacher</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -106,25 +125,28 @@
                     <div class="row px-3 py-2">
                         <div class="col-12">
                             <label class="mx-2">Full Name</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: John Doe">
+                            <input type="text" name="name" class="form-control mb-3" placeholder="Ex: John Doe">
                         </div>
                         <div class="col-12">
                             <label class="mx-2">Email</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: johndoe@example.com">
+                            <input type="text" name="email" class="form-control mb-3" placeholder="Ex: johndoe@example.com">
                         </div>
                         <div class="col-12">
                             <label class="mx-2">Mobile</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: 0771112223">
+                            <input type="text" name="mobile" class="form-control mb-3" placeholder="Ex: 0771112223">
                         </div>
                         <div class="col-12">
                             <label class="mx-2">City</label>
-                            <select class="form-control mb-3">
+                            <select class="form-control mb-3" name="city">
                                 <option value="">Select A City</option>
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-12">
                             <label class="mx-2">Gender</label>
-                            <select class="form-control mb-3">
+                            <select class="form-control mb-3" name="gender">
                                 <option value="">Select The Gender</option>
                                 <option value="1">Male</option>
                                 <option value="2">Female</option>
@@ -134,9 +156,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Add</button>
+                    <button type="button" class="btn btn-danger" onclick="addTeacher()">Add</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     {{-- Add Teacher Modal End --}}

@@ -431,6 +431,35 @@ const register = () => {
     form.submit();
 }
 
+const addTeacher = () => {
+    // get form and inputs
+    const form = document.querySelector("#add-teacher-form");
+    const inputs = form.querySelectorAll(".form-control");
+
+    // validate inputs
+    let isValid = true;
+    inputs.forEach((input) => {
+        input.classList.remove("is-invalid");
+        if (!input.value) {
+            input.classList.add("is-invalid");
+            isValid = false;
+        }
+    });
+
+    // check if all inputs are valid
+    if (!isValid) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please Fill All Fields",
+        });
+        return;
+    }
+
+    // submit form
+    form.submit();
+}
+
 const copyLink = (Button) => {
     // copy link to clipboard
     let link = Button.dataset.link;

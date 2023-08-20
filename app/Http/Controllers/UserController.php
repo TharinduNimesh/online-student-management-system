@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -84,11 +85,24 @@ class UserController extends Controller
     }
 
     protected function setPassword(Request $request) {
-        // update student as verified
-        $student = Student::find($request->id);
-        $student->update([
-            'verified_at' => Carbon::now()->toDate(),
-        ]);
+        // update user as verified
+        if ($request->role == 5) {
+            $student = Student::find($request->id);
+            $student->update([
+                'verified_at' => Carbon::now()->toDate(),
+            ]);
+        } else if ($request->role == 4) {
+            $teacher = Teacher::find($request->id);
+            $teacher->update([
+                'verified_at' => Carbon::now()->toDate(),
+            ]);
+        } else if ($request->role == 3) {
+            // $officer = Officer::find($request->id);
+            // $officer->update([
+            //     'verified_at' => Carbon::now()->toDate(),
+            // ]);
+        }
+
 
         // create user
         User::create([

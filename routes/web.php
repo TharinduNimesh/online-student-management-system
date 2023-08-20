@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -31,9 +32,8 @@ Route::prefix('admin/')->group(function() {
         return view('admin.dashboard');
     })->name('admin.dashboard');
     Route::prefix('manage/')->group(function() {
-        Route::get('teachers/', function() {
-            return view('admin.teachers');
-        })->name('admin.teachers');
+        Route::get('teachers/', [NavigationController::class, 'adminManageTeacher'])
+        ->name('admin.teachers');
         Route::get('officers', function() {
             return view('admin.officers');
         })->name('admin.officers');
@@ -106,7 +106,8 @@ Route::post('register', [UserController::class, 'register'])
 // Register Route
 Route::post('add/student', [StudentController::class, 'create'])
 ->name('student.add');
-
+Route::post('add/teacher', [TeacherController::class, 'create'])
+->name('teacher.add');
 
 // set password
 Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])
