@@ -21,6 +21,29 @@
                             <th>Submited At</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @if (count($notes) == 0)
+                            <tr>
+                                <td colspan="6" class="text-center">No Any Notes Found</td>
+                            </tr>
+                        @else
+                            <tr>
+                                @foreach ($notes as $key => $note)
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $note->title }}</td>
+                                    <td>{{ $note->subject->name }}</td>
+                                    <td>Grade - {{ $note->grade }}</td>
+                                    <td>
+                                        <a href="{{ asset('storage/notes/' . $note->file) }}" 
+                                            class="btn btn-success">
+                                            <i class="fas fa-download mx-2"></i>
+                                            Download</a>
+                                    </td>
+                                    <td>{{ $note->uploaded_at }}</td>
+                                @endforeach
+                            </tr>
+                        @endif
+                    </tbody>
                 </table>
             </div>
         </div>

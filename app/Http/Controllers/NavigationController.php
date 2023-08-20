@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Note;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -139,6 +140,30 @@ class NavigationController extends Controller
         return view('teacher.notes', [
             'subjects' => $subjects,
             'grades' => $grades,
+            'notes' => $notes,
+        ]);
+    }
+
+    protected function studentNotes() 
+    {
+        // Get student's grades
+        $grades = Student::where('email', auth()->user()->email)
+            ->first()
+            ->grades()
+            ->get()
+            ->sortByDesc('year');
+
+        // Get student's notes
+        $notes = array();
+        foreach ($grades as $grade) {
+            $notes = Note::where('grade', $grade->grade)
+                ->get()
+                ->sortByDesc('uploaded_at');
+
+            $notes = $notes->merge($notes);
+        }
+
+        return view('student.notes', [
             'notes' => $notes,
         ]);
     }

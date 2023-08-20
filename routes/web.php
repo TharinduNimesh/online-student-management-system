@@ -69,9 +69,8 @@ Route::prefix('student/')->group(function() {
     Route::get('assignments/', function() {
         return view('student.assignments');
     })->name('student.assignments');
-    Route::get('manage/notes', function() {
-        return view('student.notes');
-    })->name('student.notes');
+    Route::get('manage/notes', [NavigationController::class, 'studentNotes'])
+    ->name('student.notes');
     Route::get('manage/payments', function() {
         return view('student.payments');
     })->name('student.payments');
