@@ -37,6 +37,7 @@
                             <th>Title</th>
                             <th>Subject</th>
                             <th>Grade</th>
+                            <th>Duration</th>
                             <th>Submissions</th>
                             <th>Status</th>
                             <th>Assignments</th>
@@ -50,13 +51,14 @@
                                 <td>{{ $item->title }}</td>
                                 <td>{{ $item->subject->name }}</td>
                                 <td>Grade - {{ $item->grade }}</td>
+                                <td>{{ $item->started_at }} To {{ $item->ended_at }}</td>
                                 <td>{{ '10' }}</td>
                                 <td>
                                     @if ($item->assignment_status == 1 && $item->started_at < now())
                                         <span class="text-success">Started</span>
-                                    @elseif ($item->status == 2)
+                                    @elseif ($item->assignment_status == 2)
                                         <span class="text-warning">Mark Assigned</span>
-                                    @elseif ($item->status == 3)
+                                    @elseif ($item->assignment_status == 3)
                                         <span class="text-success">Marks Released</span>
                                     @else
                                         <span class="text-danger">Not Started</span>
@@ -65,7 +67,8 @@
                                 <td>
                                     @if ($item->file_name)
                                         
-                                        <a href="{{ asset('storage/assignments/' . $item->file_name) }}" target="_blank" class="btn btn-success">
+                                        <a href="{{ asset('storage/assignments/' . $item->file_name) }}" 
+                                            target="_blank" class="btn btn-success">
                                             <i class="fa-solid fa-download mx-2"></i>
                                             Download
                                         </a>
@@ -76,18 +79,26 @@
                                 <td>
                                     <div class="d-flex justify-content-evenly gap-2">
                                         @if ($item->assignment_status == 1 && $item->ended_at < now())
-                                            <a href="#" class="btn btn-warning">
+                                        <form method="POST" action="{{ route('assignment.update.status') }}">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $item->id }}">
+                                            <input type="hidden" name="status" value="2">
+                                            <button href="#" class="btn btn-warning">
                                                 <i class="fa-solid fa-edit mx-2"></i>
                                                 Mark As Marks Assigned
-                                            </a>
+                                            </button>
+                                        </form>
                                         @endif
-                                        <form action="#" method="POST">
+                                        @if ($item->assignment_status == 1)
+                                        <form action="{{ route('assignment.delete') }}" method="POST">
                                             @csrf
+                                            <input type="hidden" name="id" value="{{ $item->id }}">
                                             <button class="btn btn-danger">
                                                 <i class="fa-solid fa-trash mx-2"></i>
                                                 Delete
                                             </button>
                                         </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

@@ -136,6 +136,8 @@ Route::post('student/update', [StudentController::class, 'update'])
 ->name('student.update');
 Route::post('teacher/update', [TeacherController::class, 'update'])
 ->name('teacher.update');
+Route::post('assignment/update/status', [AssignmentController::class, 'updateStatus'])
+->name('assignment.update.status');
 
 // delete routes
 Route::get('student/delete/{id}', [StudentController::class, 'delete'])
@@ -146,5 +148,7 @@ Route::post('/teacher/remove-grade/', [TeacherController::class, 'removeGrade'])
 ->name('teacher.remove.grade');
 Route::get('teacher/delete/{id}', [TeacherController::class, 'delete'])
 ->name('teacher.delete');
+Route::post('assignment/delete/', [AssignmentController::class, 'delete'])
+->name('assignment.delete');
 
 // Mail Routes

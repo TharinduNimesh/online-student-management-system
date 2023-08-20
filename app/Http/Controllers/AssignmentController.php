@@ -34,4 +34,28 @@ class AssignmentController extends Controller
             return redirect()->back()->with('error', 'Error While Uploading File');
         }
     }
+
+    public function updateStatus(Request $request)
+    {
+        $assignment = Assignment::find($request->id);
+
+        $assignment->update([
+            'assignment_status' => $request->status,
+        ]);
+
+        return redirect()->back()->with('success', 'Assignment Status Updated Successfully');
+    }
+
+    public function delete(Request $request)
+    {
+        $assignment = Assignment::find($request->id);
+
+        if(Storage::exists('public/assignments/' . $assignment->file_name)) {
+            Storage::delete('public/assignments/' . $assignment->file_name);
+        }
+
+        $assignment->delete();
+
+        return redirect()->back()->with('success', 'Assignment Deleted Successfully');
+    }
 }
