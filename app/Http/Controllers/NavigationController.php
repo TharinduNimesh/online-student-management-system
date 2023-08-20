@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 
@@ -44,17 +45,25 @@ class NavigationController extends Controller
     }
 
     protected function adminManageTeacher(Request $request) {
+        // Get all cities
         $ciites = City::all()
             ->sortBy('name');
 
+        // Get all subjects
+        $subjects = Subject::all()
+            ->sortBy('name');
+
+        // Get all teachers 
         $teachers = Teacher::where('is_removed', 0)
             ->with('city')
             ->get()
             ->sortBy('name');
 
+        // Return view with data
         return view('admin.teachers', [
             'cities' => $ciites,
             'teachers' => $teachers,
+            'subjects' => $subjects,
         ]);
     }
 

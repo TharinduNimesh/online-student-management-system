@@ -108,6 +108,10 @@ Route::post('add/student', [StudentController::class, 'create'])
 ->name('student.add');
 Route::post('add/teacher', [TeacherController::class, 'create'])
 ->name('teacher.add');
+Route::post('/teacher/add-subject/', [TeacherController::class, 'addSubject'])
+->name('teacher.add.subject');
+Route::post('/teacher/add-grade/', [TeacherController::class, 'addGrade'])
+->name('teacher.add.grade');
 
 // set password
 Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])
@@ -128,6 +132,8 @@ Route::get('teacher/{id}', [TeacherController::class, 'get'])
 // update routes
 Route::post('student/update', [StudentController::class, 'update'])
 ->name('student.update');
+Route::post('teacher/update', [TeacherController::class, 'update'])
+->name('teacher.update');
 
 // delete routes
 Route::get('student/delete/{id}', [StudentController::class, 'delete'])
@@ -136,5 +142,7 @@ Route::post('/teacher/remove-subject/', [TeacherController::class, 'removeSubjec
 ->name('teacher.remove.subject');
 Route::post('/teacher/remove-grade/', [TeacherController::class, 'removeGrade'])
 ->name('teacher.remove.grade');
+Route::get('teacher/delete/{id}', [TeacherController::class, 'delete'])
+->name('teacher.delete');
 
 // Mail Routes

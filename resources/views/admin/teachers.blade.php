@@ -73,6 +73,11 @@
                             <th>Actions</th>
                         </thead>
                         <tbody>
+                            @if ($teachers->isEmpty())
+                                <tr>
+                                    <td colspan="6" class="bg-primary font-bold text-center">No Teachers Found</td>
+                                </tr>
+                            @else
                             @foreach ($teachers as $teacher)
                             <tr>
                                 <td>{{ $teacher->id }}</td>
@@ -91,17 +96,23 @@
                                         onclick="showTeacher(this);">
                                         <i class="fa-solid fa-eye mx-2"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#editTeacherModal">
+                                    <button class="btn btn-sm btn-primary" data-teacher="{{ $teacher->id }}"
+                                        onclick="showTeacherToEdit(this)">
                                         <i class="fa-solid fa-edit mx-2"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#removeTeacherModal">
-                                        <i class="fa-solid fa-trash mx-2"></i>
-                                    </button>
+                                    <form action="{{ route('teacher.delete', [
+                                        'id' => $teacher->id,
+                                    ]) }}" method="get" id="remove-form-{{ $teacher->id }}" 
+                                        class="d-inline-block">
+                                        <button type="button" class="btn btn-sm btn-danger" 
+                                            onclick="removeTeacher({{ $teacher->id }})">
+                                            <i class="fa-solid fa-trash mx-2"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr> 
                             @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -247,20 +258,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row px-3 py-2">
+                    <form class="row px-3 py-2" action="{{ route('teacher.update') }}" 
+                        method="POST" id="update-teacher-form">
+                        @csrf
+                        <input type="hidden" name="id" id="id">
                         <div class="col-12">
                             <label class="mx-2">Full Name</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: John Doe">
+                            <input type="text" id="name" name="name" 
+                                class="form-control mb-3" placeholder="Ex: John Doe">
                         </div>
-                        <div class="col-12 col-md-6">
-                            <label class="mx-2">Email</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: John Doe">
-                        </div>
-                        <div class="col-12 col-md-6">
+                        <div class="col-12">
                             <label class="mx-2">Mobile</label>
-                            <input type="text" class="form-control mb-3" placeholder="Ex: John Doe">
+                            <input type="text" id="mobile" name="mobile" 
+                                class="form-control mb-3" placeholder="Ex: 0771112223">
                         </div>
-                    </div>
+                    </form>
                     <hr>
                     <div class="row mt-3">
                         <div class="col-12 col-md-6 p-3">
@@ -274,29 +286,17 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @for ($i = 0; $i < 5; $i++)
-                                            <tr>
-                                                <td>{{ $i + 1 }}</td>
-                                                <td>Subject {{ $i + 1 }}</td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-sm btn-danger">
-                                                        <i class="fa-solid fa-trash mx-2"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endfor
-                                    </tbody>
+                                    <tbody id="subjects-body"></tbody>
                                 </table>
                             </div>
                             <div class="px-3  input-group">
-                                <select class="form-control">
+                                <select class="form-control" id="subject">
                                     <option value="">Select Subject</option>
-                                    <option value="">Subject 1</option>
-                                    <option value="">Subject 2</option>
-                                    <option value="">Subject 3</option>
+                                    @foreach ($subjects as $subject)
+                                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                    @endforeach
                                 </select>
-                                <button class="btn btn-success mx-2">Add</button>
+                                <button class="btn btn-success mx-2" onclick="addSubject();">Add</button>
                             </div>
                         </div>
 
@@ -311,31 +311,19 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @for ($i = 0; $i < 5; $i++)
-                                            <tr>
-                                                <td>{{ $i + 1 }}</td>
-                                                <td>Grade - {{ $i + 1 }}</td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-sm btn-danger">
-                                                        <i class="fa-solid fa-trash mx-2"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endfor
-                                    </tbody>
+                                    <tbody id="grades-body"></tbody>
                                 </table>
                             </div>
                             <div class="px-3  input-group">
-                                <input type="number" class="form-control" />
-                                <button class="btn btn-success mx-2">Add</button>
+                                <input type="number" class="form-control" id="grade"/>
+                                <button class="btn btn-success mx-2" onclick="addGrade();">Add</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Update</button>
+                    <button type="button" class="btn btn-danger" onclick="updateTeacher();">Update</button>
                 </div>
             </div>
         </div>

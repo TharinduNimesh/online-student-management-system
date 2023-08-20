@@ -76,23 +76,10 @@ class StudentController extends Controller
     public function update(Request $request) {
         // get student
         $student = Student::find($request->id);
-        
-        // check if email exists
-        $user = Student::where('email', $request->email)
-        ->where('id', '!=', $request->id)
-        ->first();
-
-        if($user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Email already exists'
-            ]);
-        }
 
         // update student all details
         $student->update([
             'name' => $request->name,
-            'email' => $request->email,
             'mobile' => $request->mobile,
             'date_of_birth' => $request->dob,
         ]);

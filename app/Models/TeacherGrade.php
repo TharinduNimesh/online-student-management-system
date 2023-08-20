@@ -12,8 +12,10 @@ class TeacherGrade extends Model
 
     protected $fillable = [
         'teacher_id',
-        'grade_id'
+        'grade'
     ];
+
+    public $timestamps = false;
 
     public function teacher()
     {
