@@ -918,6 +918,30 @@ const uploadAssignment = () => {
     }
 };
 
+const uploadNotes = () => {
+    const form = document.querySelector("#note-form");
+    const inputs = form.querySelectorAll(".form-control");
+
+    let isValid = true;
+    inputs.forEach(input => {
+        input.classList.remove("is-invalid");
+        if(input.value.trim() === "") {
+            input.classList.add("is-invalid");
+            isValid = false;
+        }
+    });
+
+    if(isValid) {
+        form.submit();
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please fill all the fields!",
+        });
+    }
+};
+
 const copyLink = (Button) => {
     // copy link to clipboard
     let link = Button.dataset.link;

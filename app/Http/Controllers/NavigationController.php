@@ -114,4 +114,32 @@ class NavigationController extends Controller
             'assignments' => $assignments,
         ]);
     }
+
+    protected function teacherManageNotes()
+    {
+        // all teacher's subjects
+        $subjects = Teacher::where('email', auth()->user()->email)
+            ->first()
+            ->subjects()
+            ->get();
+
+        // Teacher's Grades
+        $grades = Teacher::where('email', auth()->user()->email)
+            ->first()
+            ->grades()
+            ->get();
+
+        // // Get Teacher's Notes
+        $notes = Teacher::where('email', auth()->user()->email)
+            ->first()
+            ->notes()
+            ->get()
+            ->sortByDesc('created_at');
+
+        return view('teacher.notes', [
+            'subjects' => $subjects,
+            'grades' => $grades,
+            'notes' => $notes,
+        ]);
+    }
 }

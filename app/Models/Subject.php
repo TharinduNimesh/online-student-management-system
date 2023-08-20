@@ -19,4 +19,9 @@ class Subject extends Model
     {
         return $this->hasMany(Assignment::class);
     }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
 }

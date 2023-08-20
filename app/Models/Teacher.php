@@ -38,4 +38,8 @@ class Teacher extends Model
     public function assignments() {
         return $this->hasMany(Assignment::class, 'uploaded_by');
     }
+
+    public function notes() {
+        return $this->hasMany(Note::class, 'uploaded_by');
+    }
 }

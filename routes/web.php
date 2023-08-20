@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\NavigationController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
@@ -56,9 +57,8 @@ Route::prefix('teacher/')->group(function() {
     })->name('teacher.dashboard');
     Route::get('manage/assignments', [NavigationController::class, 'teacherManageAssignments'])
     ->name('teacher.assignments');
-    Route::get('manage/notes', function() {
-        return view('teacher.notes');
-    })->name('teacher.notes');
+    Route::get('manage/notes', [NavigationController::class, 'teacherManageNotes'])
+    ->name('teacher.notes');
 });
 
 // Student Routes
@@ -114,6 +114,8 @@ Route::post('/teacher/add-grade/', [TeacherController::class, 'addGrade'])
 ->name('teacher.add.grade');
 Route::post('/teacher/add-assignment/', [AssignmentController::class, 'create'])
 ->name('teacher.add.assignment');
+Route::post('/teacher/add-note/', [NoteController::class, 'create'])
+->name('teacher.add.note');
 
 // set password
 Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])
@@ -150,5 +152,7 @@ Route::get('teacher/delete/{id}', [TeacherController::class, 'delete'])
 ->name('teacher.delete');
 Route::post('assignment/delete/', [AssignmentController::class, 'delete'])
 ->name('assignment.delete');
+Route::post('note/delete/', [NoteController::class, 'delete'])
+->name('note.delete');
 
 // Mail Routes

@@ -165,7 +165,7 @@
                             <select class="form-control" name="grade">
                                 <option value="">Select A Grade</option>
                                 @foreach ($grades as $grade)
-                                    <option value="{{ $grade->id }}">Grade - {{ $grade->grade }}</option>
+                                    <option value="{{ $grade->grade }}">Grade - {{ $grade->grade }}</option>
                                 @endforeach
                             </select>
                         </div>
