@@ -66,9 +66,8 @@ Route::prefix('student/')->group(function() {
     Route::get('dashboard/', function() {
         return view('student.dashboard');
     })->name('student.dashboard');
-    Route::get('assignments/', function() {
-        return view('student.assignments');
-    })->name('student.assignments');
+    Route::get('assignments/', [NavigationController::class, 'studentAssignments'])
+    ->name('student.assignments');
     Route::get('manage/notes', [NavigationController::class, 'studentNotes'])
     ->name('student.notes');
     Route::get('manage/payments', function() {
@@ -115,6 +114,8 @@ Route::post('/teacher/add-assignment/', [AssignmentController::class, 'create'])
 ->name('teacher.add.assignment');
 Route::post('/teacher/add-note/', [NoteController::class, 'create'])
 ->name('teacher.add.note');
+Route::post('/add/submission/', [AssignmentController::class, 'addSubmission'])
+->name('student.add.submission');
 
 // set password
 Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])

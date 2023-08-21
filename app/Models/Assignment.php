@@ -33,4 +33,9 @@ class Assignment extends Model
     {
         return $this->belongsTo(User::class, 'uploaded_by');
     }
+
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
 }

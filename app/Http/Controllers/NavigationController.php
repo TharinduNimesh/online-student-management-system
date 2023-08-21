@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\City;
 use App\Models\Note;
 use App\Models\Student;
@@ -165,6 +166,37 @@ class NavigationController extends Controller
 
         return view('student.notes', [
             'notes' => $notes,
+        ]);
+    }
+
+    protected function studentAssignments()
+    {
+        // Get student's grades
+        $grades = Student::where('email', auth()->user()->email)
+            ->first()
+            ->grades()
+            ->get()
+            ->where('year', date('Y'))
+            ->first();
+
+        // Get student's assignments
+        $assignments = Assignment::where('grade', $grades->grade)
+            ->where('started_at', '<=', Carbon::now())
+            ->where('ended_at', '>=', Carbon::now())
+            ->get()
+            ->sortByDesc('started_at');
+
+        // Get student's submissions in last year
+        $submissions = Student::where('email', auth()->user()->email)
+            ->first()
+            ->submissions()
+            ->where('submitted_at', '>=', Carbon::now()->subDays(365))
+            ->get()
+            ->sortByDesc('submitted_at');
+
+        return view('student.assignments', [
+            'assignments' => $assignments,
+            'submissions' => $submissions,
         ]);
     }
 }
