@@ -107,13 +107,21 @@ class NavigationController extends Controller
         // Get Teacher's Assignments
         $assignments = Teacher::where('email', auth()->user()->email)
             ->first()
-            ->assignments
+            ->assignments()
+            ->get()
             ->sortByDesc('started_at');
+        
+        //  Get Submissions Of teacher's assignments
+        $submissions = collect();
+        foreach ($assignments as $assignment) {
+            $submissions = $submissions->merge($assignment->submissions()->get());
+        }
             
         return view('teacher.assignments', [
             'subjects' => $subjects,
             'grades' => $grades,
             'assignments' => $assignments,
+            'submissions' => $submissions,
         ]);
     }
 

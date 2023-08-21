@@ -17,17 +17,17 @@
                 </div>
             </div>
             @if (session('error'))
-            <div class="alert alert-danger col-md-8 offset-md-2">
-                <h5 class="alert-heading">Error</h5>
-                <hr>
-                <p>{{ session('error') }}</p>
-            </div>
+                <div class="alert alert-danger col-md-8 offset-md-2">
+                    <h5 class="alert-heading">Error</h5>
+                    <hr>
+                    <p>{{ session('error') }}</p>
+                </div>
             @elseif (session('success'))
-            <div class="alert alert-success col-md-8 offset-md-2">
-                <h5 class="alert-heading">Success</h5>
-                <hr>
-                <p>{{ session('success') }}</p>
-            </div>
+                <div class="alert alert-success col-md-8 offset-md-2">
+                    <h5 class="alert-heading">Success</h5>
+                    <hr>
+                    <p>{{ session('success') }}</p>
+                </div>
             @endif
             <div class="table-responsive px-4">
                 <table class="table table-bordered table-hover table-dark">
@@ -52,7 +52,7 @@
                                 <td>{{ $item->subject->name }}</td>
                                 <td>Grade - {{ $item->grade }}</td>
                                 <td>{{ $item->started_at }} To {{ $item->ended_at }}</td>
-                                <td>{{ '10' }}</td>
+                                <td class="text-center">{{ $item->submissions->count() }}</td>
                                 <td>
                                     @if ($item->assignment_status == 1 && $item->started_at < now())
                                         <span class="text-success">Started</span>
@@ -66,9 +66,8 @@
                                 </td>
                                 <td>
                                     @if ($item->file_name)
-                                        
-                                        <a href="{{ asset('storage/assignments/' . $item->file_name) }}" 
-                                            target="_blank" class="btn btn-success">
+                                        <a href="{{ asset('storage/assignments/' . $item->file_name) }}" target="_blank"
+                                            class="btn btn-success">
                                             <i class="fa-solid fa-download mx-2"></i>
                                             Download
                                         </a>
@@ -79,25 +78,25 @@
                                 <td>
                                     <div class="d-flex justify-content-evenly gap-2">
                                         @if ($item->assignment_status == 1 && $item->ended_at < now())
-                                        <form method="POST" action="{{ route('assignment.update.status') }}">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $item->id }}">
-                                            <input type="hidden" name="status" value="2">
-                                            <button href="#" class="btn btn-warning">
-                                                <i class="fa-solid fa-edit mx-2"></i>
-                                                Mark As Marks Assigned
-                                            </button>
-                                        </form>
+                                            <form method="POST" action="{{ route('assignment.update.status') }}">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                                <input type="hidden" name="status" value="2">
+                                                <button href="#" class="btn btn-warning">
+                                                    <i class="fa-solid fa-edit mx-2"></i>
+                                                    Mark As Marks Assigned
+                                                </button>
+                                            </form>
                                         @endif
                                         @if ($item->assignment_status == 1)
-                                        <form action="{{ route('assignment.delete') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $item->id }}">
-                                            <button class="btn btn-danger">
-                                                <i class="fa-solid fa-trash mx-2"></i>
-                                                Delete
-                                            </button>
-                                        </form>
+                                            <form action="{{ route('assignment.delete') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                                <button class="btn btn-danger">
+                                                    <i class="fa-solid fa-trash mx-2"></i>
+                                                    Delete
+                                                </button>
+                                            </form>
                                         @endif
                                     </div>
                                 </td>
@@ -116,6 +115,19 @@
             <div class="row">
                 <h3 class="text-light mx-3">Submited Answers</h3>
             </div>
+            @if (session('error_submission'))
+                <div class="alert alert-danger col-md-8 offset-md-2">
+                    <h5 class="alert-heading">Error</h5>
+                    <hr>
+                    <p>{{ session('error_submission') }}</p>
+                </div>
+            @elseif (session('success_submission'))
+                <div class="alert alert-success col-md-8 offset-md-2">
+                    <h5 class="alert-heading">Success</h5>
+                    <hr>
+                    <p>{{ session('success_submission') }}</p>
+                </div>
+            @endif
             <div class="table-responsive px-4">
                 <table class="table table-bordered table-hover table-dark">
                     <thead>
@@ -129,6 +141,38 @@
                             <th>Marks</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach ($submissions as $submission)
+                            <tr>
+                                <td>{{ $submission->student->name }}</td>
+                                <td>{{ $submission->assignment->title }}</td>
+                                <td>{{ $submission->assignment->subject->name }}</td>
+                                <td>Grade - {{ $submission->assignment->grade }}</td>
+                                <td>{{ \Carbon\Carbon::parse($submission->submitted_at)->format('M d, Y h:i A') }}</td>
+                                <td>
+                                    <a href="{{ asset('storage/submissions/' . $submission->file) }}"
+                                        class="btn btn-success">
+                                        Download</a>
+                                </td>
+                                <td class="d-flex justify-content-center" style="width: 300px">
+                                    @if ($submission->marks)
+                                        {{ $submission->marks }}
+                                    @else
+                                        <form action="{{ route('teacher.add.marks') }}" method="post" class="d-flex">
+                                            <div class="input-group">
+                                                @csrf
+                                                <input type="hidden" name="submission" value="{{ $submission->id }}">
+                                                <input type="text" class="form-control" name="marks"
+                                                    placeholder="Enter The Marks" aria-label="Recipient's username" required
+                                                    aria-describedby="button-addon2">
+                                                <button class="btn btn-warning" id="button-addon2">Submit</button>
+                                            </div>
+                                        </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -143,8 +187,8 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">New Assignments</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="modal-body" method="POST" id="assignment-form" 
-                action="{{ route('teacher.add.assignment') }}" enctype="multipart/form-data">
+                <form class="modal-body" method="POST" id="assignment-form" action="{{ route('teacher.add.assignment') }}"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12 mt-3">

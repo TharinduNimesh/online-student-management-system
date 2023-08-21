@@ -8,6 +8,7 @@ use App\Models\Submission;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class AssignmentController extends Controller
 {
@@ -95,5 +96,28 @@ class AssignmentController extends Controller
         } else {
             return redirect()->back()->with('error', 'Error While Uploading File');
         }
+    }
+
+    public function addMarks(Request $request)
+    {
+        // validate marks is integer and between 0 and 100
+        $validator = Validator::make($request->all(), [
+            'marks' => 'required|integer|min:0|max:100',
+        ]);
+
+        // check if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->with('error_submission', 'Marks Must Be Between 0 and 100');
+        }
+
+        // find submission
+        $submission = Submission::find($request->submission);
+
+        // update submission marks
+        $submission->update([
+            'marks' => $request->marks,
+        ]);
+
+        return redirect()->back()->with('success_submission', 'Marks Added Successfully');
     }
 }

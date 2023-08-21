@@ -116,6 +116,8 @@ Route::post('/teacher/add-note/', [NoteController::class, 'create'])
 ->name('teacher.add.note');
 Route::post('/add/submission/', [AssignmentController::class, 'addSubmission'])
 ->name('student.add.submission');
+Route::post('/add/marks/', [AssignmentController::class, 'addMarks'])
+->name('teacher.add.marks');
 
 // set password
 Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])
