@@ -29,7 +29,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Admin Routes
-Route::prefix('admin/')->group(function() {
+Route::prefix('admin/')->middleware(['auth'])->group(function() {
     Route::get('dashboard/', function() {
         return view('admin.dashboard');
     })->name('admin.dashboard');
@@ -42,16 +42,15 @@ Route::prefix('admin/')->group(function() {
         Route::get('students', [NavigationController::class, 'adminManageStudents'])
         ->name('admin.students');
     });
-    Route::get('academic-information', function() {
-        return view('admin.academic');
-    })->name('admin.academic');
+    Route::get('academic-information', [NavigationController::class, 'adminManageLearning'])
+    ->name('admin.academic');
     Route::get('payments', function() {
         return view('admin.payments');
     })->name('admin.payments');
 });
 
 // Teacher Routes
-Route::prefix('teacher/')->group(function() {
+Route::prefix('teacher/')->middleware(['auth'])->group(function() {
     Route::get('dashboard/', function() {
         return view('teacher.dashboard');
     })->name('teacher.dashboard');
@@ -62,7 +61,7 @@ Route::prefix('teacher/')->group(function() {
 });
 
 // Student Routes
-Route::prefix('student/')->group(function() {
+Route::prefix('student/')->middleware(['auth'])->group(function() {
     Route::get('dashboard/', function() {
         return view('student.dashboard');
     })->name('student.dashboard');
@@ -76,7 +75,7 @@ Route::prefix('student/')->group(function() {
 });
 
 // Officer Routes
-Route::prefix('officer/')->group(function() {
+Route::prefix('officer/')->middleware(['auth'])->group(function() {
     Route::get('dashboard/', function() {
         return view('officer.dashboard');
     })->name('officer.dashboard');

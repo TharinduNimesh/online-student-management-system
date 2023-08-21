@@ -70,6 +70,22 @@ class NavigationController extends Controller
         ]);
     }
 
+    protected function adminManageLearning() 
+    {
+        $assignments = Assignment::where('ended_at', 'like', Carbon::now()->year . '%')
+            ->get()
+            ->sortByDesc('started_at');
+
+        $notes = Note::where('uploaded_at', 'like', Carbon::now()->year . '%')
+            ->get()
+            ->sortByDesc('uploaded_at');
+
+        return view('admin.academic', [
+            'assignments' => $assignments,
+            'notes' => $notes,
+        ]);
+    }
+
     protected function setPassword($role, $id)
     {
         $user = null;

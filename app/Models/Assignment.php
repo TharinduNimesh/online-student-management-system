@@ -29,9 +29,9 @@ class Assignment extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    public function user()
+    public function teacher()
     {
-        return $this->belongsTo(User::class, 'uploaded_by');
+        return $this->belongsTo(Teacher::class, 'uploaded_by');
     }
 
     public function submissions()
