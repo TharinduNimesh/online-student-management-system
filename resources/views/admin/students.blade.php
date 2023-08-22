@@ -43,11 +43,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row my-3">
-                    <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-                        <input type="text" class="form-control" placeholder="Student's name">
-                    </div>
-                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-dark">
                         <thead>
@@ -129,11 +124,6 @@
     <div class="col-12 px-1">
         <div class="p-3 bg-dark rounded-h-100">
             <h3 class="text-light">All NON-Graded Students Informations</h3>
-            <div class="row my-3">
-                <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-                    <input type="text" class="form-control" placeholder="Student's name">
-                </div>
-            </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-dark">
                     <thead>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
@@ -30,15 +31,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Admin Routes
 Route::prefix('admin/')->middleware(['auth'])->group(function() {
-    Route::get('dashboard/', function() {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('dashboard/', [NavigationController::class, 'admindahsboard'])
+    ->name('admin.dashboard');
     Route::prefix('manage/')->group(function() {
         Route::get('teachers/', [NavigationController::class, 'adminManageTeacher'])
         ->name('admin.teachers');
-        Route::get('officers', function() {
-            return view('admin.officers');
-        })->name('admin.officers');
+        Route::get('officers', [NavigationController::class, 'adminManageOfficers'])
+        ->name('admin.officers');
         Route::get('students', [NavigationController::class, 'adminManageStudents'])
         ->name('admin.students');
     });
@@ -51,9 +50,8 @@ Route::prefix('admin/')->middleware(['auth'])->group(function() {
 
 // Teacher Routes
 Route::prefix('teacher/')->middleware(['auth'])->group(function() {
-    Route::get('dashboard/', function() {
-        return view('teacher.dashboard');
-    })->name('teacher.dashboard');
+    Route::get('dashboard/', [NavigationController::class, 'teacherDashboard'])
+    ->name('teacher.dashboard');
     Route::get('manage/assignments', [NavigationController::class, 'teacherManageAssignments'])
     ->name('teacher.assignments');
     Route::get('manage/notes', [NavigationController::class, 'teacherManageNotes'])
@@ -62,9 +60,8 @@ Route::prefix('teacher/')->middleware(['auth'])->group(function() {
 
 // Student Routes
 Route::prefix('student/')->middleware(['auth'])->group(function() {
-    Route::get('dashboard/', function() {
-        return view('student.dashboard');
-    })->name('student.dashboard');
+    Route::get('dashboard/', [NavigationController::class, 'studentDashboard'])
+    ->name('student.dashboard');
     Route::get('assignments/', [NavigationController::class, 'studentAssignments'])
     ->name('student.assignments');
     Route::get('manage/notes', [NavigationController::class, 'studentNotes'])
@@ -117,6 +114,8 @@ Route::post('/add/submission/', [AssignmentController::class, 'addSubmission'])
 ->name('student.add.submission');
 Route::post('/add/marks/', [AssignmentController::class, 'addMarks'])
 ->name('teacher.add.marks');
+Route::post('/add/officer/', [OfficerController::class, 'create'])
+->name('officer.add');
 
 // set password
 Route::get('set-password/{role}/{id}', [NavigationController::class, 'setPassword'])
@@ -155,5 +154,8 @@ Route::post('assignment/delete/', [AssignmentController::class, 'delete'])
 ->name('assignment.delete');
 Route::post('note/delete/', [NoteController::class, 'delete'])
 ->name('note.delete');
+Route::post('officer/remove', [OfficerController::class, 'delete'])
+->name('officer.remove');
+    
 
 // Mail Routes

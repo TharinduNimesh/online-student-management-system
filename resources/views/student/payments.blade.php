@@ -129,5 +129,11 @@
 @section('scripts')
     <script>
         updateActiveMenu('payments');
+        Swal.fire({
+            title: 'Coming Soon!',
+            text: 'This feature is not available yet. Please check back later.',
+            icon: 'info',
+            confirmButtonText: 'OK'
+        });
     </script>
 @endsection

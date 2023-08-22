@@ -3,35 +3,6 @@
 @section('title', 'Manage Teachers')
 
 @section('section')
-    {{-- Charts Start --}}
-    <div class="row mt-4">
-        <div class="col-md-6 px-1">
-            <div class="p-3 bg-dark rounded h-100">
-                <div class="w-100 mb-3 d-flex justify-content-between align-items-center px-2">
-                    <h5 class="text-secondary mx-3">Teachers By Subjects</h5>
-                </div>
-                <div class="p-4">
-                    <canvas id="subjectChart" width="400" height="400"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 px-1 mt-2 mt-md-0">
-            <div class="p-3 bg-dark rounded h-100">
-                <div class="w-100 mb-3 d-flex justify-content-between align-items-center px-2">
-                    <h5 class="text-secondary mx-3">Teachers By Grade</h5>
-                </div>
-                <div class="p-4">
-                    <canvas id="gradeChart" width="400" height="400"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- Charts End --}}
-
-    @php
-        $faker = Faker\Factory::create();
-    @endphp
-
     {{-- All Teachers Start --}}
     <div class="row mt-4">
         <div class="col-12 px-1">
@@ -42,7 +13,19 @@
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
                             <i class="fa-solid fa-user-plus mx-2"></i>
                             Add A New Teacher</button>
-                        <button class="btn btn-primary">
+                            <button 
+                                class="btn btn-primary" 
+                                data-toggle="popover" 
+                                data-bs-custom-class="custom-popover"
+                                data-bs-trigger="focus"
+                                data-bs-title="Success!"
+                                data-bs-content="Invitation Link Copied Successfully !!!" 
+                                data-bs-placement="top"
+                                data-link="{{ route('auth.register.invite', [
+                                    'role' => 'teacher',
+                                ]) }}"
+                            onclick="copyLink(this)"
+                            >
                             <i class="fa-solid fa-copy mx-2"></i>
                             Copy Invitation Link</button>
                     </div>
@@ -57,11 +40,6 @@
                     </div>
                 @endif
 
-                <div class="row my-3">
-                    <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-                        <input type="text" class="form-control" placeholder="Teacher's name">
-                    </div>
-                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-dark">
                         <thead>

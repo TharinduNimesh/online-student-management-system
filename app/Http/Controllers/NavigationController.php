@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Assignment;
 use App\Models\City;
 use App\Models\Note;
+use App\Models\Officer;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -26,15 +27,15 @@ class NavigationController extends Controller
         $non_grade_students = Student::whereDoesntHave('grades', function ($query) use ($currentYear) {
             $query->where('year', $currentYear);
         })
-        ->where('is_removed', 0)
-        ->get()
-        ->sortBy('name');
+            ->where('is_removed', 0)
+            ->get()
+            ->sortBy('name');
 
 
         // graded students
         $graded_students = Student::whereHas('grades', function ($query) use ($currentYear) {
             $query->where('year', $currentYear);
-            })
+        })
             ->where('is_removed', 0)
             ->get()
             ->sortBy('grades.grade');
@@ -47,7 +48,8 @@ class NavigationController extends Controller
         ]);
     }
 
-    protected function adminManageTeacher(Request $request) {
+    protected function adminManageTeacher(Request $request)
+    {
         // Get all cities
         $ciites = City::all()
             ->sortBy('name');
@@ -70,7 +72,7 @@ class NavigationController extends Controller
         ]);
     }
 
-    protected function adminManageLearning() 
+    protected function adminManageLearning()
     {
         $assignments = Assignment::where('ended_at', 'like', Carbon::now()->year . '%')
             ->get()
@@ -83,6 +85,56 @@ class NavigationController extends Controller
         return view('admin.academic', [
             'assignments' => $assignments,
             'notes' => $notes,
+        ]);
+    }
+
+    protected function adminManageOfficers()
+    {
+        $cities = City::all()
+            ->sortBy('name');
+
+        $officers = Officer::where('is_removed', 0)
+            ->get()
+            ->sortBy('name');
+
+        return view('admin.officers', [
+            'cities' => $cities,
+            'officers' => $officers,
+        ]);
+    }
+
+    protected function admindahsboard()
+    {
+        $teachers = Teacher::where('is_removed', 0)
+            ->take(5)
+            ->get()
+            ->sortByDesc('id');
+
+        $officers = Officer::where('is_removed', 0)
+            ->take(5)
+            ->get()
+            ->sortByDesc('id');
+
+        $assignments = Assignment::all()
+            ->take(5)
+            ->sortByDesc('id');
+
+        $students_count = Student::where('is_removed', 0)
+            ->count();
+
+        $teachers_count = Teacher::where('is_removed', 0)
+            ->count();
+
+        $officers_count = Officer::where('is_removed', 0)
+            ->count();
+
+        return view('admin.dashboard', [
+            'teachers' => $teachers,
+            'officers' => $officers,
+            'assignments' => $assignments,
+            'students_count' => $students_count,
+            'teachers_count' => $teachers_count,
+            'officers_count' => $officers_count,
         ]);
     }
 
@@ -126,13 +178,13 @@ class NavigationController extends Controller
             ->assignments()
             ->get()
             ->sortByDesc('started_at');
-        
+
         //  Get Submissions Of teacher's assignments
         $submissions = collect();
         foreach ($assignments as $assignment) {
             $submissions = $submissions->merge($assignment->submissions()->get());
         }
-            
+
         return view('teacher.assignments', [
             'subjects' => $subjects,
             'grades' => $grades,
@@ -169,7 +221,46 @@ class NavigationController extends Controller
         ]);
     }
 
-    protected function studentNotes() 
+    protected function teacherDashboard()
+    {
+        // Get Teacher's Grades
+        $grade = Teacher::where('email', auth()->user()->email)
+            ->first()
+            ->grades()
+            ->first();
+
+        // Get Teacher's Assignments
+        $assignments = Teacher::where('email', auth()->user()->email)
+            ->first()
+            ->assignments()
+            ->get();
+
+        // Get Teacher's Notes
+        $notes_count = Teacher::where('email', auth()->user()->email)
+            ->first()
+            ->notes()
+            ->get()
+            ->count();
+
+        // Get Teacher's Submissions
+        $submissions = collect();
+        foreach ($assignments as $assignment) {
+            $submissions = $submissions->merge($assignment->submissions()->get());
+            if ($submissions->count() == 5) {
+                break;
+            }
+        }
+
+        return view('teacher.dashboard', [
+            'grade' => $grade,
+            'assignments' => $assignments,
+            'assignments_count' => $assignments->count(),
+            'notes_count' => $notes_count,
+            'submissions' => $submissions,
+        ]);
+    }
+
+    protected function studentNotes()
     {
         // Get student's grades
         $grades = Student::where('email', auth()->user()->email)
@@ -221,6 +312,54 @@ class NavigationController extends Controller
         return view('student.assignments', [
             'assignments' => $assignments,
             'submissions' => $submissions,
+        ]);
+    }
+
+    protected function studentDashboard()
+    {
+        $submissions = Student::where('email', auth()->user()->email)
+            ->first()
+            ->submissions()
+            ->get();
+
+        $submissions_count = $submissions->count();
+
+        $total = 0;
+        foreach ($submissions as $submission) {
+            if ($submission->marks) {
+                $total += $submission->marks;
+            }
+        }
+
+        $average = 0;
+        if ($submissions_count != 0) {
+            $average = $total / $submissions_count;
+        }
+
+        // Get student's grades
+        $grades = Student::where('email', auth()->user()->email)
+            ->first()
+            ->grades()
+            ->get()
+            ->where('year', date('Y'))
+            ->first();
+
+        // Get student's assignments
+        $assignments = Assignment::where('grade', $grades->grade)
+            ->where('started_at', '<=', Carbon::now())
+            ->where('ended_at', '>=', Carbon::now())
+            ->get()
+            ->sortByDesc('started_at');
+
+        $notes = Note::where('grade', $grades)
+            ->get()
+            ->sortByDesc('uploaded_at');
+
+        return view('student.dashboard', [
+            'submissions_count' => $submissions_count,
+            'average' => $average,
+            'assignments' => $assignments->take(5),
+            'notes' => $notes->take(5),
         ]);
     }
 }

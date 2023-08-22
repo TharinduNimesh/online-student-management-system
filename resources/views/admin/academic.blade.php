@@ -8,12 +8,6 @@
         {{-- Assignment Start --}}
         <div class="col-12 bg-dark rounded p-3 mt-3">
             <h3 class="text-white mx-3">Information About Assignments</h3>
-            <div class="row px-3">
-                <div class="col-12 px-3">
-                    <label class="text-light mx-3">Filter By Grade</label>
-                    <input type="text" class="form-control" placeholder="Ex: 9" />
-                </div>
-            </div>
             <div class="table-responsive mt-3">
                 <table class="table table-dark table-hover table-bordered">
                     <thead>
@@ -79,12 +73,6 @@
         {{-- Lesson Notes Start --}}
         <div class="col-12 bg-dark rounded p-3 mt-3">
             <h3 class="text-white mx-3">Information About Lesson Notes</h3>
-            <div class="row px-3">
-                <div class="col-12 px-3">
-                    <label class="text-light mx-3">Filter By Grade</label>
-                    <input type="text" class="form-control" placeholder="Ex: 9" />
-                </div>
-            </div>
             <div class="table-responsive mt-3">
                 <table class="table table-dark table-hover table-bordered">
                     <thead>

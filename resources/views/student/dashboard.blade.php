@@ -11,8 +11,8 @@
                     <i class="fa-solid fa-clipboard-check text-light fs-2"></i>
                 </div>
                 <div class="col-7 d-flex flex-column justify-content-center align-items-center">
-                    <span class="text-secondary p-0 fs-6 font-bold">Assignments</span>
-                    <span class="text-primary font-bold fs-4 p-0">2300</span>
+                    <span class="text-secondary p-0 fs-6 font-bold">Submissions</span>
+                    <span class="text-primary font-bold fs-4 p-0">{{ $submissions_count }}</span>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-7 d-flex flex-column justify-content-center align-items-center">
                     <span class="text-secondary p-0 fs-6 font-bold">Average Marks</span>
-                    <span class="text-primary font-bold fs-4 p-0">2300</span>
+                    <span class="text-primary font-bold fs-4 p-0">{{ $average }}%</span>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="p-3 bg-dark rounded h-100">
                 <div class="w-100 mb-3 d-flex justify-content-between align-items-center px-2">
                     <h5 class="text-secondary mx-3">Recently Added Assignments</h5>
-                    <a href="#" class="btn btn-danger d-none d-md-block">Show All</a>
+                    <a href="{{ route('student.assignments') }}" class="btn btn-danger d-none d-md-block">Show All</a>
                 </div>
                 <div class="table-responsive mt-3">
                     <table class="table table-bordered table-dark table-hover">
@@ -51,25 +51,30 @@
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Download</th>
-                            <th>Marks</th>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < 5; $i++)
+                            @if ($assignments->count() == 0)
                                 <tr>
-                                    <td>{{ $i + 1 }}</td>
-                                    <td>{{ $faker->sentence }}</td>
-                                    <td>{{ $faker->word }}</td>
-                                    <td>{{ $faker->name }}</td>
-                                    <td>{{ $faker->date }}</td>
-                                    <td>
-                                        <button class="btn btn-success px-3">
-                                            <i class="fa-solid fa-circle-down mx-1"></i>
-                                            Download
-                                        </button>
-                                    </td>
-                                    <td>{{ $faker->numberBetween(0, 100) }}</td>
+                                    <td colspan="6" class="bg-primary font-bold text-center">No Assignments Found</td>
                                 </tr>
-                            @endfor
+                            @else
+                                @foreach ($assignments as $assignment)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $assignment->title }}</td>
+                                        <td>{{ $assignment->subject->name }}</td>
+                                        <td>{{ $assignment->started_at }}</td>
+                                        <td>{{ $assignment->ended_at }}</td>
+                                        <td>
+                                            <a href="{{ asset('storage/assignments/' . $assignment->file_name) }}" 
+                                                class="btn btn-success px-3">
+                                                <i class="fa-solid fa-circle-down mx-1"></i>
+                                                Download
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -84,7 +89,7 @@
             <div class="p-3 bg-dark rounded h-100">
                 <div class="w-100 mb-3 d-flex justify-content-between align-items-center px-2">
                     <h5 class="text-secondary mx-3">Recently Added Note Lessons</h5>
-                    <a href="#" class="btn btn-danger d-none d-md-block">Show All</a>
+                    <a href="{{ route('student.notes') }}" class="btn btn-danger d-none d-md-block">Show All</a>
                 </div>
                 <div class="table-responsive mt-3">
                     <table class="table table-bordered table-dark table-hover">
@@ -97,21 +102,28 @@
                             <th>Download</th>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < 5; $i++)
+                            @if ($notes->count() == 0)
                                 <tr>
-                                    <td>{{ $i + 1 }}</td>
-                                    <td>{{ $faker->sentence }}</td>
-                                    <td>{{ $faker->numberBetween(1, 15) }}</td>
-                                    <td>{{ $faker->word }}</td>
-                                    <td>{{ $faker->date }}</td>
-                                    <td>
-                                        <button class="btn btn-success px-3">
-                                            <i class="fa-solid fa-circle-down mx-1"></i>
-                                            Download
-                                        </button>
-                                    </td>
+                                    <td colspan="6" class="bg-primary font-bold text-center">No Note Lessons Found</td>
                                 </tr>
-                            @endfor
+                            @else
+                                @foreach ($notes as $note)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $note->title }}</td>
+                                        <td>{{ $note->grade }}</td>
+                                        <td>{{ $note->subject->name }}</td>
+                                        <td>{{ $note->uploaded_at }}</td>
+                                        <td>
+                                            <a href="{{ asset('storage/notes/' . $note->file) }}" 
+                                                class="btn btn-success px-3">
+                                                <i class="fa-solid fa-circle-down mx-1"></i>
+                                                Download
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

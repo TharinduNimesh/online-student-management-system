@@ -8,12 +8,6 @@
         {{-- Manual Payments Start --}}
         <div class="col-12 bg-dark rounded p-3 mt-3">
             <h3 class="text-white mx-3">Manual Payments</h3>
-            <div class="row px-3">
-                <div class="col-12 px-3">
-                    <label class="text-light mx-3">Filter By Name</label>
-                    <input type="text" class="form-control" placeholder="Ex: John Doe" />
-                </div>
-            </div>
             <div class="table-responsive mt-3">
                 <table class="table table-dark table-hover table-bordered">
                     <thead>
@@ -37,12 +31,6 @@
         {{-- Non-Payment Students --}}
         <div class="col-12 bg-dark rounded p-3 mt-3">
             <h3 class="text-white mx-3">Non-Payment Students</h3>
-            <div class="row px-3">
-                <div class="col-12 px-3">
-                    <label class="text-light mx-3">Filter By Name</label>
-                    <input type="text" class="form-control" placeholder="Ex: John Doe" />
-                </div>
-            </div>
             <div class="table-responsive mt-3">
                 <table class="table table-dark table-hover table-bordered">
                     <thead>
@@ -68,5 +56,11 @@
 @section('scripts')
     <script>
         updateActiveMenu('payments');
+        Swal.fire({
+            title: 'Coming Soon!',
+            text: 'This feature is not available yet. Please check back later.',
+            icon: 'info',
+            confirmButtonText: 'OK'
+        });
     </script>
 @endsection
