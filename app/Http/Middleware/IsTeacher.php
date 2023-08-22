@@ -18,5 +18,6 @@ class IsTeacher
         if (auth()->user()->role_id == 4) {
             return $next($request);
         } 
+        return redirect('login');
     }
 }

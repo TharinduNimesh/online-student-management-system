@@ -18,5 +18,6 @@ class IsStudent
         if (auth()->user()->role_id == 5) {
             return $next($request);
         } 
+        return redirect('login');
     }
 }

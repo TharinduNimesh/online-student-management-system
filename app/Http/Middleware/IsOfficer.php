@@ -18,5 +18,6 @@ class IsOfficer
         if (auth()->user()->role_id == 3) {
             return $next($request);
         } 
+        return redirect('login');
     }
 }
