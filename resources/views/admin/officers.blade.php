@@ -65,7 +65,7 @@
                             @else
                                 @foreach ($officers as $officer)
                                     <tr>
-                                        <td>{{ $officer->id }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $officer->name }}</td>
                                         <td>{{ $officer->mobile }}</td>
                                         <td>{{ $officer->email }}</td>
@@ -73,7 +73,7 @@
                                             @if ($officer->verified_at)
                                                 {{ $officer->verified_at }}
                                             @else
-                                                Not Verified
+                                                <p class="text-primary">Not Verified</p>
                                             @endif    
                                         </td>
                                         <td class="text-center">

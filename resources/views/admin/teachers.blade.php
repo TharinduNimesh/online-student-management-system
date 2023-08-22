@@ -58,7 +58,7 @@
                             @else
                             @foreach ($teachers as $teacher)
                             <tr>
-                                <td>{{ $teacher->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $teacher->name }}</td>
                                 <td>{{ $teacher->email }}</td>
                                 <td>{{ $teacher->city->name }}</td>

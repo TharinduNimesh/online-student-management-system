@@ -62,7 +62,7 @@
                             @else
                                 @foreach ($graded_students as $student)
                                     <tr>
-                                        <td>{{ $student->id }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $student->name }}</td>
                                         <td>{{ $student->mobile }}</td>
                                         <td> Grade -
@@ -144,7 +144,7 @@
                         @else
                             @foreach ($non_grade_students as $student)
                                 <tr>
-                                    <td>{{ $student->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $student->name }}</td>
                                     <td>{{ $student->mobile }}</td>
                                     <td>
