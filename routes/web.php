@@ -30,7 +30,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Admin Routes
-Route::prefix('admin/')->middleware(['auth'])->group(function() {
+Route::prefix('admin/')->middleware(['auth', 'isAdmin'])->group(function() {
     Route::get('dashboard/', [NavigationController::class, 'admindahsboard'])
     ->name('admin.dashboard');
     Route::prefix('manage/')->group(function() {
@@ -49,7 +49,7 @@ Route::prefix('admin/')->middleware(['auth'])->group(function() {
 });
 
 // Teacher Routes
-Route::prefix('teacher/')->middleware(['auth'])->group(function() {
+Route::prefix('teacher/')->middleware(['auth', 'isTeacher'])->group(function() {
     Route::get('dashboard/', [NavigationController::class, 'teacherDashboard'])
     ->name('teacher.dashboard');
     Route::get('manage/assignments', [NavigationController::class, 'teacherManageAssignments'])
@@ -59,7 +59,7 @@ Route::prefix('teacher/')->middleware(['auth'])->group(function() {
 });
 
 // Student Routes
-Route::prefix('student/')->middleware(['auth'])->group(function() {
+Route::prefix('student/')->middleware(['auth', 'isStudent'])->group(function() {
     Route::get('dashboard/', [NavigationController::class, 'studentDashboard'])
     ->name('student.dashboard');
     Route::get('assignments/', [NavigationController::class, 'studentAssignments'])
@@ -72,7 +72,7 @@ Route::prefix('student/')->middleware(['auth'])->group(function() {
 });
 
 // Officer Routes
-Route::prefix('officer/')->middleware(['auth'])->group(function() {
+Route::prefix('officer/')->middleware(['auth', 'isOfficer'])->group(function() {
     Route::get('dashboard/', function() {
         return view('officer.dashboard');
     })->name('officer.dashboard');
