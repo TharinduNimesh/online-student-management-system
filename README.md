@@ -30,7 +30,6 @@ Before starting the installation, ensure that you have PHP 8.1, Composer, MySQL 
 3. Install PHP dependencies using Composer:
     ```bash
     composer install
-    composer update
 
 4. Generate an application key:
      ```bash
